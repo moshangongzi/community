@@ -1,5 +1,5 @@
 page {
-	--adminColor: #2499f2;
+	--adminColor: #2b91d3;
 	--adminRedColor: #FF6666;
 }
 
@@ -269,7 +269,8 @@ page {
 }
 
 .btn-admin {
-	width: 90%;
+	min-width: 90%;
+	max-height: 80rpx;
 	display: flex;
 	align-items: center;
 	justify-content: center;
