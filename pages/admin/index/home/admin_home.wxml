@@ -1,7 +1,7 @@
 <!-- <view wx:if="{{!isLoad}}" class="margin-top load loading text-l text-admin"></view> -->
 
-<view class="main-admin" wx:if="{{isLoad && isAdmin}}">
-<!-- <view class="main-admin" > -->
+<!-- <view class="main-admin" wx:if="{{isLoad && isAdmin}}"> -->
+<view class="main-admin" >
 
 	<view class="admin-info bg-admin">
 		<view class="pic"><text class="icon-peoplefill"></text></view>

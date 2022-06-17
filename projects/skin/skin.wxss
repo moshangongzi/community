@@ -9,7 +9,7 @@ page {
 	/* 整体颜色 */
 	--calendarPageColor: #fff;
 	/* 加重颜色*/
-	--calendarMainColor: #1C9D9D !important;
+	--calendarMainColor: #1973bc !important;
 	/* 加重的亮颜色 用于选中日期的数据小圆点 */
 	--calendarLightColor: #43e2e2;
 }
