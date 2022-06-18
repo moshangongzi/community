@@ -1,1 +1,3 @@
-/* projects/news/index/news_index.wxss */
+@import "../../../style/project/base/appt.wxss";
+@import "../../skin/skin.wxss"; 
+@import "../../../style/project/news_index_base.wxss";  

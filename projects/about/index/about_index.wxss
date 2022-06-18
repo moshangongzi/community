@@ -1,1 +1,6 @@
-/* projects/about/index/about_index.wxss */
+@import "../../skin/skin.wxss"; 
+@import "../../../style/project/about_index_base.wxss";
+
+.main .pics {
+	width: 100%; 
+}

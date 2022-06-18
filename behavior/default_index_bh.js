@@ -25,7 +25,7 @@ module.exports = Behavior({
 			}
 			await cloudHelper.callCloudSumbit('news/home_list', {}, opts).then(res => {
 				this.setData({
-					dataList: res.data
+					// dataList: res.data
 				});
 			})
 		},

@@ -1,1 +1,6 @@
-/* pages/admin/meet/list/admin_meet_list.wxss */
+@import '../../../../style/project/base/admin.wxss';
+
+page {
+	background-color: #f8f8f8;
+}
+ 

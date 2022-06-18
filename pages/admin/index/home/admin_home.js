@@ -1,17 +1,13 @@
-const AdminBiz = require('../../../../biz/admin_biz');
+const AdminBiz = require('../../../../biz/admin_biz.js');
 const pageHelper = require('../../../../helper/page_helper.js');
+const cloudHelper = require('../../../../helper/cloud_helper.js');
 
 Page({
 
 	/**
 	 * 页面的初始数据
 	 */
-	data: {
-		formContent: [{
-			type: 'text',
-			val: '',
-		}]
-	},
+	data: {},
 
 	/**
 	 * 生命周期函数--监听页面加载
@@ -19,18 +15,40 @@ Page({
 	onLoad: async function (options) {
 		// if (!AdminBiz.isAdmin(this)) return;
 
-		let parent = pageHelper.getPrevPage(2);
-		if (!parent) return;
 
-		let formContent = parent.data.formContent;
-		if (formContent && formContent.length > 0)
-			this.setData({
-				formContent
-			});
+		this._loadDetail();
 	},
 
+	/**
+	 * 页面相关事件处理函数--监听用户下拉动作
+	 */
+	onPullDownRefresh: async function () {
+		await this._loadDetail();
+		wx.stopPullDownRefresh();
+	},
 
+	_loadDetail: async function () {
 
+		let admin = AdminBiz.getAdminToken();
+		this.setData({
+			isLoad: true,
+			admin
+		});
+
+		try {
+			let opts = {
+				title: 'bar'
+			}
+			let res = await cloudHelper.callCloudData('admin/home', {}, opts);
+			this.setData({
+
+				data: res
+			});
+
+		} catch (err) {
+			console.log(err);
+		}
+	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
@@ -42,7 +60,9 @@ Page({
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
-	onShow: function () {},
+	onShow: function () {
+
+	},
 
 	/**
 	 * 生命周期函数--监听页面隐藏
@@ -58,43 +78,48 @@ Page({
 
 	},
 
-	/**
-	 * 页面相关事件处理函数--监听用户下拉动作
-	 */
-	onPullDownRefresh: async function () {
-
-	},
-
-	model: function (e) {
-		pageHelper.model(this, e);
-	},
-
-	bindSaveTap: function (e) {
-		let parent = pageHelper.getPrevPage(2);
-		if (!parent) return;
-		parent.setData({
-			formContent: this.data.formContent
-		});
-	},
-
 	url: function (e) {
 		pageHelper.url(e, this);
 	},
 
-	bindSaveTap: function (e) {
-		let formContent = this.selectComponent("#contentEditor").getNodeList();
+	bindExitTap: function (e) {
 
-		let parent = pageHelper.getPrevPage(2);
-		if (!parent) return;
+		let callback = function () {
+			AdminBiz.clearAdminToken();
+			wx.reLaunch({
+				url: pageHelper.fmtURLByPID('/pages/my/index/my_index'),
+			});
+		}
+		pageHelper.showConfirm('您确认退出?', callback);
+	},
 
-		parent.setData({
-			formContent
-		}, () => {
-			parent._setContentDesc();
-		});
+	bindSettingTap: function (e) {
+		let itemList = ['清除数据缓存'];
+		wx.showActionSheet({
+			itemList,
+			success: async res => {
+				switch (res.tapIndex) {
+					case 0: { //清除缓存
+						await this._clearCache();
+						break;
+					}
+				}
+			},
+			fail: function (res) {}
+		})
+	},
 
-		wx.navigateBack({
-			delta: 0,
-		});
+	_clearCache: async function () {
+		try {
+			let opts = {
+				title: '数据缓存清除中'
+			}
+			await cloudHelper.callCloudSumbit('admin/clear_cache', {}, opts).then(res => {
+				pageHelper.showSuccToast('清除成功');
+			});
+		} catch (err) {
+			console.error(err);
+		}
 	}
+
 })
