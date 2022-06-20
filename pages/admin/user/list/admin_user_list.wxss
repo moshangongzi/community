@@ -1,1 +1,5 @@
-/* pages/admin/user/list/admin_user_list.wxss */
+@import '../../../../style/project/base/admin.wxss';
+
+page {
+	background-color: #f8f8f8;
+} 
