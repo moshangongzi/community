@@ -1,2 +1,2 @@
-<!--projects/news/detail/news_detail.wxml-->
-<text>projects/news/detail/news_detail.wxml</text>
+<import src="../../../tpls/project/news_detail_tpl.wxml" />
+<template is="newsDetailTpl" data="{{id,isLoad,news}}" />

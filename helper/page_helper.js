@@ -74,7 +74,7 @@
  	if (route.includes('/admin/')) { //后台直接读缓存
  		let skin = getSkin();
  		if (skin) return skin.PID;
- 	} else if (route.startsWith('/projects/A')) { //前台根据路径判定
+ 	} else if (route.startsWith('/projects')) { //前台根据路径判定
  		let PID = route.replace('/projects/', '');
  		PID = PID.split('/')[0];
  		return PID;
@@ -85,9 +85,9 @@
  function fmtURLByPID(url, PID = '') {
  	if (!PID) PID = getPID();
  	if (url.startsWith('/pages/')) {
- 		url = url.replace('/pages/', '/projects/' + PID + '/');
+ 		url = url.replace('/pages/', '/projects/' );
  	} else {
- 		url = '/projects/' + PID + '/' + url;
+ 		url = '/projects/'+ url;
  	}
  	return url;
  }

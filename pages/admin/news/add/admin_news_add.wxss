@@ -1,1 +1,2 @@
-/* pages/admin/news/add/admin_news_add.wxss */
+@import '../../../../style/project/base/admin.wxss';
+ 

@@ -30,7 +30,7 @@
 			<view wx:elif="{{listMode=='leftpic'}}" class="item card-project shadow-project item-leftpic" bindtap="url" data-url="../../{{item.type}}/detail/{{item.type}}_detail?id={{item._id}}">
 				<view class="title content-cut-two">{{item.title}}</view>
 				<view class="desc">
-					<image class="pic loading" lazy-load="{{true}}" mode="aspectFill" src="{{item.pic}}">
+					<image class="pic loading" lazy-load="{{true}}" mode="aspectFill" src="../../skin/images/menu/skate.png">
 					</image>
 					<text class="content-cut-three">{{item.desc}}</text> 
 				</view>

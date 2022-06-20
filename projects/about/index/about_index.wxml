@@ -1,2 +1,2 @@
-<!--projects/about/index/about_index.wxml-->
-<text>projects/about/index/about_index.wxml</text>
+<import src="../../../tpls/project/about_index_tpl.wxml" />
+<template is="aboutIndexTpl" data="{{about,accountInfo,isLoad}}" />

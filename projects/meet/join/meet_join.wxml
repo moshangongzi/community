@@ -1,2 +1,2 @@
-<!--projects/meet/join/meet_join.wxml-->
-<text>projects/meet/join/meet_join.wxml</text>
+<import src="../../../tpls/project/meet_join_tpl.wxml" />
+<template is="meetJoinTpl" data="{{forms,id,isLoad,timeMark,meet}}" />

@@ -1,2 +1,2 @@
-<!--projects/my/join/my_join.wxml-->
-<text>projects/my/join/my_join.wxml</text>
+<import src="../../../tpls/project/my_join_tpl.wxml" />
+<template is="myJoinTpl" data="{{skin,sortItems,sortMenus,dataList,search,isTotalMenu:true}}" />

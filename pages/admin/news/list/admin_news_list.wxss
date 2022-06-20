@@ -1,1 +1,6 @@
-/* pages/admin/news/list/admin_news_list.wxss */
+@import '../../../../style/project/base/admin.wxss';
+
+page {
+	background-color: #f8f8f8;
+}
+
