@@ -33,13 +33,15 @@ module.exports = Behavior({
 			let opt = {
 				title: 'bar'
 			};
-			let news = await cloudHelper.callCloudData('news/view', params, opt);
-			if (!news) {
-				this.setData({
-					isLoad: null
-				})
-				return;
-			}
+			let news = this.data.news
+			console.log(news);
+			// let news = await cloudHelper.callCloudData('news/view', params, opt);
+			// if (!news) {
+			// 	this.setData({
+			// 		isLoad: null
+			// 	})
+			// 	return;
+			// }
 
 
 			this.setData({

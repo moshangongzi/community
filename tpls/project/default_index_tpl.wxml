@@ -23,7 +23,7 @@
 			<!-- List Begin -->
 			<view wx:if="{{!dataList}}" class="margin-top load loading text-l load-project"></view>
 			<import src="../../tpls/public/base_list_tpl.wxml" />
-			<template is="baseListTpl" data="{{dataList,listMode}}" />
+			<template is="baseListTpl" data="{{dataList:dataList.list,listMode}}" />
 			<!-- List END -->
 		</view>
 	</view>

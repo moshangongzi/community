@@ -1,7 +1,4 @@
-let behavior = require('../../../behavior/default_index_bh.js');
-let PassortBiz = require('../../../biz/passport_biz.js');
-let skin = require('../../skin/skin.js');
-
+const db = wx.cloud.database()
 Page({
 
     /**
@@ -40,56 +37,24 @@ Page({
                 },
             ]
         },
-        dataList: [
-            {
-                desc: '滑板社招新啦！！！',
-                ext: '2022-6-14',
-                pic: '../../skin/images/menu/skate.png',
-                title: '社团招新标题',
-                type: "news",
-                _id: 1
-            },
-            {
-                desc: '滑板社招新啦！！！',
-                ext: '2022-6-14',
-                pic: '../../skin/images/menu/skate.png',
-                title: '社团招新标题',
-                type: "news",
-                _id: 2
-            },
-            {
-                desc: '滑板社招新啦！！！',
-                ext: '2022-6-14',
-                pic: '../../skin/images/menu/skate.png',
-                title: '社团招新标题',
-                type: "news",
-                _id: 3
-            },
-            {
-                desc: '滑板社招新啦！！！',
-                ext: '2022-6-14',
-                pic: '../../skin/images/menu/skate.png',
-                title: '社团招新标题',
-                type: "news",
-                _id: 4
-            },
-        ]
+        dataList: []
     },
     onLoad: function (options) {
-
+        db.collection('com_notice').get({
+			success: res => {
+			 this.setData({
+				'dataList.list':res.data,
+                'dataList.isLoad': true
+			 })
+			}
+		  })
     },
-
-    behaviors: [behavior],
-
-	onReady: function () {
-		PassortBiz.initPage({
-			skin,
-			that: this,
-			isLoadSkin: true,
-			tabIndex: -1,
-			isModifyNavColor: true
-		});
-	},
-
-    
+    // 页面跳转/图片预览 
+	 url: function (e, that) {
+		let url = e.currentTarget.dataset.url;
+		if (!url) return;
+		wx.navigateTo({
+			url
+		})
+	}
 })

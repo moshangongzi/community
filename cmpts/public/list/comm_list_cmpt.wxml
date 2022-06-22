@@ -58,7 +58,7 @@
 <!-- content END -->
   
 <!-- top begin -->
-<button wx:if="{{topShow}}"  class="btn-fixed bg-gray text-gray btn-top" bindtap="bindTopTap" style="bottom:{{topBottom}}rpx"><text class="icon-top"></text></button>
+<button wx:if="{{topShow}}"  class="btn-fixed bg-gray text-gray btn-top" bindtap="bindTopTap" style="bottom:{{topBottom}}rpx; max-width:45rpx"><text class="icon-top"></text></button>
 <!-- top END. -->
 
 <!-- pulldown detail [modal] begin-->  

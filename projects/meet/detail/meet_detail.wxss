@@ -100,7 +100,7 @@
 .big-box {
 	width: 100%;
 	padding: 0;
-	margin-top: 193rpx;
+	margin-top: 115rpx;
 	display: flex; 
 }
 
