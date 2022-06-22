@@ -9,9 +9,7 @@
 		<view wx:if="{{activeList}}" class="load text-grey">共有{{activeList.length}}条符合条件记录 </view>
 		<view class="item" wx:for="{{activeList}}" wx:key="_id">
 			<view class="header">
-				<view class="right" bindtap="bindScanTap" data-id="{{item._id}}" data-title="{{item.title}}">
-					{{item.title}}
-				</view>
+				<view class="actTitle" bindtap="bindScanTap" data-id="{{item._id}}" data-title="{{item.title}}">{{item.title}}</view>
 			</view>
 
 			<view class="info">
@@ -26,13 +24,13 @@
 				</view>
 
 				<view class="info-item">
-					<view class="title">时间</view>
+					<view class="title">时段</view>
 					<view class="mao">：</view>
 					<view class="content {{item.leaveDay==0?'text-grey':''}}">{{item.leaveDay}}天可用</view>
 				</view>
 
 				<view class="info-item">
-					<view class="title">创建/变更</view>
+					<view class="title">创建</view>
 					<view class="mao">：</view>
 					<view class="content">{{item.editTime}}</view>
 				</view>

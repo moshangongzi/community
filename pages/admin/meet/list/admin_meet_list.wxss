@@ -10,3 +10,6 @@ page {
 	width: 100%;
 	bottom: 0px;
 }
+.actTitle {
+	font-weight: 700;
+}

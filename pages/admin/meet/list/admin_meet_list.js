@@ -10,21 +10,21 @@ Page({
 	 */
 	data: {
 		activeList:[{
-			_id:'02',
+			_id:'01',
 			title:'折千纸鹤活动',
 			status:'1',
-			leaveDay:'0',
-			editTime:'10',
+			leaveDay:'2',
+			editTime:'2022-06-21 13:30:31',
 		},{
 			_id:'02',
 			title:'折纸玫瑰活动',
-			status:'1',
+			status:'0',
 			leaveDay:'0',
 			editTime:'10',
 		},{
 			_id:'03',
 			title:'折星星活动',
-			status:'1',
+			status:'-1',
 			leaveDay:'0',
 			editTime:'10',
 		}]
