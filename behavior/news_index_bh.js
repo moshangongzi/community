@@ -78,9 +78,9 @@ module.exports = Behavior({
 			pageHelper.url(e, this);
 		},
 
-		bindCommListCmpt: function (e) {
-			pageHelper.commListListener(this, e);
-		},
+		// bindCommListCmpt: function (e) {
+		// 	pageHelper.commListListener(this, e);
+		// },
 
 		/**
 		 * 用户点击右上角分享

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "projects/my/index/my_index",
     "projects/default/index/default_index",
+    "projects/my/index/my_index",
     "projects/about/index/about_index",
     "projects/about/contact/about_contact",
     "projects/meet/index/meet_index",

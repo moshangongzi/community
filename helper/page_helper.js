@@ -492,9 +492,11 @@
  			sortType: '',
  		});
  	else {
+		 console.log('commListListener111'+e.detail.dataList);
  		that.setData({
  			dataList: e.detail.dataList,
- 		});
+		 });
+		 console.log('commListListener123'+e.detail.dataList);
  		if (e.detail.sortType)
  			that.setData({
  				sortType: e.detail.sortType,
@@ -562,6 +564,7 @@
 
  // 页面跳转/图片预览 
  function url(e, that) {
+	 console.log('item',e.currentTarget.dataset.url);
  	let url = e.currentTarget.dataset.url;
  	let type = e.currentTarget.dataset.type;
  	if (!type) type = 'url';
@@ -729,11 +732,11 @@
  }
 
  function getOptions(that, options, idName = 'id') {
- 	let id = options[idName];
+	 let id = options[idName];
  	if (!id) return false;
 
  	that.setData({
- 		[idName]: id
+		 [idName]: id
  	});
  	return true;
 

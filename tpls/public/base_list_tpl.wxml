@@ -16,12 +16,12 @@
 			<view wx:elif="{{listMode=='rightpic'}}" class="item card-project shadow-project item-rightpic" bindtap="url" data-url="../../{{item.type}}/detail/{{item.type}}_detail?id={{item._id}}">
 				<view class="title content-cut-two">{{item.title}}</view>
 				<view class="desc">
-					<text class="content-cut-three">{{item.desc}}</text>
+					<text class="content-cut-three">{{item.content}}</text>
 					<image class="pic loading" lazy-load="{{true}}" mode="aspectFill" src="{{item.pic}}">
 					</image>
 				</view>
 				<view class="data">
-					<text class="margin-right">{{item.ext}}</text>
+					<text class="margin-right">{{item.time}}</text>
 				</view>
 			</view>
 			<!--右边图 END-->
@@ -30,12 +30,12 @@
 			<view wx:elif="{{listMode=='leftpic'}}" class="item card-project shadow-project item-leftpic" bindtap="url" data-url="../../{{item.type}}/detail/{{item.type}}_detail?id={{item._id}}">
 				<view class="title content-cut-two">{{item.title}}</view>
 				<view class="desc">
-					<image class="pic loading" lazy-load="{{true}}" mode="aspectFill" src="../../skin/images/menu/skate.png">
+					<image class="pic loading" lazy-load="{{true}}" mode="aspectFill" src="{{item.pic}}">
 					</image>
-					<text class="content-cut-three">{{item.desc}}</text> 
+					<text class="content-cut-three">{{item.content}}</text> 
 				</view>
 				<view class="data">
-					<text class="margin-right">{{item.ext}}</text>
+					<text class="margin-right">{{item.time}}</text>
 				</view>
 			</view>
 			<!--左边图 END-->
@@ -47,12 +47,12 @@
 				<view class="leftbig-right">
 					<view class="leftbig-title content-cut-one">{{item.title}}</view>
 					<view class="leftbig-desc">
-						<text class="{{listMode=='leftbig3'?'content-cut-two':'content-cut-three'}}">{{item.desc}} </text>
+						<text class="{{listMode=='leftbig3'?'content-cut-two':'content-cut-three'}}">{{item.content}} </text>
 					</view>
 					<view class="data">
 						<view class="meet-tag-list text-cut">
 						</view>
-						<view class="meet-status"><text wx:if="{{item.type=='meet'}}" class="icon-remind margin-right-xxs"></text>{{item.ext}}</view>
+						<view class="meet-status"><text wx:if="{{item.type=='meet'}}" class="icon-remind margin-right-xxs"></text>{{item.time}}</view>
 					</view>
 				</view>
 			</view>

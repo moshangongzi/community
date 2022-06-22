@@ -1,6 +1,6 @@
 {
-    "cloudfunctionRoot": "cloudfunction/",
     "description": "项目配置文件",
+    "cloudfunctionRoot": "cloudfunction/",
     "setting": {
         "urlCheck": true,
         "coverView": true,
@@ -29,5 +29,19 @@
     "libVersion": "2.24.6",
     "appid": "wx042dec96f25e877a",
     "projectname": "community",
-    "condition": {}
+    "condition": {},
+    "scripts": {},
+    "packOptions": {
+        "ignore": [],
+        "include": []
+    },
+    "watchOptions": {
+        "ignore": []
+    },
+    "debugOptions": {
+        "hidedInDevtools": []
+    },
+    "staticServerOptions": {
+        "servePath": ""
+    }
 }
