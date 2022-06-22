@@ -1,107 +1,72 @@
-const AdminBiz = require('../../../../biz/admin_biz.js');
-const pageHelper = require('../../../../helper/page_helper.js');
-const cloudHelper = require('../../../../helper/cloud_helper.js');
-
+let db = wx.cloud.database().collection('User');
 Page({
-
-	onLoad: async function (options) {
-		if (!AdminBiz.isAdmin(this)) return;
-
-		//设置搜索菜单
-		await this._getSearchMenu();
+	data: {
+		userList: [],
+		inputValue: '',
 	},
-
-	url: async function (e) {
-		pageHelper.url(e, this);
+	onLoad: async function () {
+		this.getUserList()
 	},
-
-
-	bindCommListCmpt: function (e) {
-		pageHelper.commListListener(this, e);
-	},
-
-	bindDelTap: async function (e) {
-		if (!AdminBiz.isAdmin(this)) return;
-		let id = pageHelper.dataset(e, 'id');
-
-		let params = {
-			id
-		}
-
-		let callback = async () => {
-			try {
-				let opts = {
-					title: '删除中'
-				}
-				await cloudHelper.callCloudSumbit('admin/user_del', params, opts).then(res => {
-					
-					pageHelper.delListNode(id, this.data.dataList.list, 'USER_MINI_OPENID');
-					this.data.dataList.total--;
-					this.setData({
-						dataList: this.data.dataList
-					});
-					pageHelper.showSuccToast('删除成功');
-				});
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		pageHelper.showConfirm('确认删除？删除不可恢复', callback);
-
-	},
-
-	bindStatusTap: async function (e) {
-		if (!AdminBiz.isAdmin(this)) return;
-		let id = pageHelper.dataset(e, 'id');
-		let status = pageHelper.dataset(e, 'status');
-
-		let params = {
-			id,
-			status
-		}
-		try {
-			await cloudHelper.callCloudSumbit('admin/user_status', params).then(res => {
-				pageHelper.modifyListNode(id, this.data.dataList.list, 'USER_STATUS', status, 'USER_MINI_OPENID');
+	//获取用户数据
+	getUserList() {
+		db.get()
+			.then(res => {
 				this.setData({
-					dataList: this.data.dataList
-				});
-				pageHelper.showSuccToast('设置成功');
-			});
-		} catch (e) {
-			console.log(e);
-		}
+					userList: res.data
+				})
+			})
+			.catch(err => {
+				console.log('用户数据请求失败', err)
+			})
 	},
-
-	_getSearchMenu: async function () {
-
-		let sortItems = [];
-		let sortMenus = [{
-				label: '全部',
-				type: '',
-				value: ''
-			}, {
-				label: '正常',
-				type: 'status',
-				value: 1
-			}, 
-			{
-				label: '注册时间正序',
-				type: 'sort',
-				value: 'newasc'
-			},
-			{
-				label: '注册时间倒序',
-				type: 'sort',
-				value: 'newdesc'
-			},
-
-		]
+	onChange(e) {
 		this.setData({
-			sortItems,
-			sortMenus
+			inputValue: e.detail,
+		});
+	},
+	onSearch() {
+		var value = this.data.inputValue;
+		db.where({
+			uname: value
 		})
-
-
+			.get()
+			.then(res => {
+				console.log(res)
+				this.setData({
+					userList: res.data,
+					inputValue:''
+				})
+			})
+			.catch(err => {
+				console.log('用户筛选后数据请求失败', err)
+			})
+		console.log(this.data.inputValue)
+	},
+	//删除用户
+	bindDelTap(e) {
+		var that = this;
+		wx.showModal({
+			title: '提示',
+			content: '确认删除？删除不可恢复',
+			success: function (sm) {
+				if (sm.confirm) {
+					that.del(e.target.dataset.id);
+				} else if (sm.cancel) {
+					console.log('用户点击取消')
+				}
+			}
+		})
+	},
+	del(id) {
+		db.doc(id).remove()
+			.then(res => {
+				this.getUserList()
+				wx.showToast({
+					title: '删除成功！',
+				})
+			})
+			.catch(err => {
+				console.log('删除失败', err)
+			})
 	}
-
 })

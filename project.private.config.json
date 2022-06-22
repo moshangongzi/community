@@ -16,10 +16,17 @@
             "list": [
                 {
                     "name": "",
+                    "pathName": "pages/admin/user/list/admin_user_list",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
                     "pathName": "pages/admin/index/home/admin_home",
                     "query": "",
-                    "scene": null,
-                    "launchMode": "default"
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }
