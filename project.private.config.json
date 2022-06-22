@@ -16,17 +16,10 @@
             "list": [
                 {
                     "name": "",
-                    "pathName": "pages/admin/user/list/admin_user_list",
+                    "pathName": "pages/admin/meet/list/admin_meet_list",
                     "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/admin/index/home/admin_home",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
+                    "scene": null,
+                    "launchMode": "default"
                 }
             ]
         }

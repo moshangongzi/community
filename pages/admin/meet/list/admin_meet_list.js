@@ -8,48 +8,41 @@ Page({
 	/**
 	 * 页面的初始数据
 	 */
-	data: {},
+	data: {
+		activeList:[{
+			_id:'02',
+			title:'折千纸鹤活动',
+			status:'1',
+			leaveDay:'0',
+			editTime:'10',
+		},{
+			_id:'02',
+			title:'折纸玫瑰活动',
+			status:'1',
+			leaveDay:'0',
+			editTime:'10',
+		},{
+			_id:'03',
+			title:'折星星活动',
+			status:'1',
+			leaveDay:'0',
+			editTime:'10',
+		}]
+	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		if (!AdminBiz.isAdmin(this)) return;
+		// if (!AdminBiz.isAdmin(this)) return;
 
 		//设置搜索菜单
-		await this._getSearchMenu();
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: async function () {},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
+		// await this._getSearchMenu();
 	},
 
 	url: async function (e) {
 		pageHelper.url(e, this);
 	},
-
 
 	bindCommListCmpt: function (e) {
 		pageHelper.commListListener(this, e);
