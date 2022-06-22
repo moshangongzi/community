@@ -16,10 +16,18 @@
             "list": [
                 {
                     "name": "",
+                    "pathName": "pages/admin/user/list/admin_user_list",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
                     "pathName": "pages/admin/index/home/admin_home",
                     "query": "",
                     "launchMode": "default",
                     "scene": null
+<<<<<<< HEAD
                 },
                 {
                     "name": "",
@@ -27,6 +35,8 @@
                     "query": "id=1",
                     "scene": null,
                     "launchMode": "default"
+=======
+>>>>>>> ace1ec11e0a4a6c6eafa1947e5793ca6a21ffa80
                 }
             ]
         }
