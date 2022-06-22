@@ -1,18 +1,12 @@
 <template name="meetJoinTpl">
-	<view wx:if="{{isLoad===null}}" class="margin-top load notexist text-l load-project"></view>
-	<view wx:if="{{isLoad===false}}" class="margin-top load loading text-l load-project"></view>
 
-	<view wx:if="{{isLoad}}" class="main padding-project">
+	<view class="main padding-project">
 
 		<view class="article-box">
 			<view class="form-box card-project shadow-project">
 				<view class="form-group">
-					<view class="title text-cut">{{meet.MEET_TITLE}}</view>
+					<view class="title text-cut">{{meet.title}}</view>
 				</view>
-				<view class="form-group" bindtap="url" data-type="back">
-					<view class="title text-cut" style="padding-right:0"><text class="icon-calendar margin-right-xxs"></text>{{meet.dayDesc}} <text class="tag mid bg-orange light round margin-right">更改时段</text></view>
-				</view>
-
 			</view>
 
 			<!-- form content begin -->
