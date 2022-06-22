@@ -1,2 +1,50 @@
-<!--pages/admin/examine/examine.wxml-->
-<text>pages/admin/examine/examine.wxml</text>
+<van-search value="{{inputValue}}" placeholder="请输入要搜索的用户名" use-action-slot bind:change="onChange" bind:search="onSearch">
+	<view slot="action" class="btn mid radius bg-admin text-white margin-right-s" bind:tap="onSearch">搜索</view>
+</van-search>
+
+<!-- List Begin -->
+<!-- <view class="admin-comm-list">
+	<view wx:if="{{userList}}" class="load text-grey">共有{{userList.length}}条符合条件记录 </view>
+
+	<view class="item" wx:for="{{userList}}" wx:key="id">
+		<view class="header">
+			<view class="left text-cut">
+			{{item.uname}}
+			</view>
+			<view class="right">
+			</view>
+		</view>
+
+		<view class="info">
+			<view class="info-item">
+				<view class="title">学号</view>
+				<view class="mao">：</view>
+				<view class="content">{{item.sid||'未填写'}}</view>
+			</view>
+
+			<view class="info-item">
+				<view class="title">专业班级</view>
+				<view class="mao">：</view>
+				<view class="content">{{item.majorClass||'未填写'}}</view>
+			</view>
+
+			<view class="info-item" bindtap="url" data-type="phone" data-url="{{item.tel}}">
+				<view class="title">手机</view>
+				<view class="mao">：</view>
+				<view class="content">{{item.tel||'未填写'}}
+					<text wx:if="{{item.tel}}" class="icon-phone margin-left-s"></text>
+				</view>
+			</view>
+
+			<view class="info-item">
+				<view class="title">性别</view>
+				<view class="mao">：</view>
+				<view class="content">{{item.sex||'未填写'}}</view>
+			</view>
+
+			<view class="oprt">
+				<view bindtap="bindDelTap" data-id="{{item._id}}" class="btn  margin-right-s"><text class="icon-delete margin-right-xxs text-orange"></text>删除</view>
+			</view>
+		</view>
+	</view>
+</view> -->

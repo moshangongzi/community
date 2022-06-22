@@ -4,7 +4,7 @@ Page({
 		userList: [],
 		inputValue: '',
 	},
-	onLoad: async function () {
+	onLoad: function () {
 		this.getUserList()
 	},
 	//获取用户数据

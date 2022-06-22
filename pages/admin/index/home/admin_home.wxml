@@ -95,5 +95,4 @@
 
 	<!-- BOTTOM END -->
 	<button bindtap="bindExitTap" class="btn-admin">退出登录</button>
-
 </view>

@@ -1,2 +1,46 @@
-<import src="../../../tpls/project/my_edit_tpl.wxml" />
-<template is="myEditTpl" data="{{isLoad,formName,formNameFocus,formMobile,formMobileFocus,formCity,formCityFocus,formWork,formWorkFocus,formTrade,formTradeFocus}}" />
+<form bindsubmit="formSubmit">
+    <view class="usermsg">
+        <van-cell-group inset>
+            <van-cell center title="头像" size="large">
+                <span class="headimg">
+                    <image src="{{userImg}}"></image>
+                </span>
+            </van-cell>
+
+            <van-cell title="姓名" size="large"><input type="text" name="uname" value="{{uname}}" /></van-cell>
+
+            <van-cell title="学号" size="large">
+                <input value="{{sid}}" type="number" name="sid" placeholder="请在此输入学号" />
+            </van-cell>
+
+            <van-cell title="专业班级" size="large">
+                <input value="{{majorClass}}" type="number" name="majorClass" placeholder="请在此输入专业班级" />
+            </van-cell>
+
+            <van-cell title="性别" size="large" title-width="330rpx">
+                <van-radio-group direction="horizontal" value="{{sex}}" name="sex">
+                    <van-radio name="女">女</van-radio>
+                    <van-radio name="男">男</van-radio>
+                </van-radio-group>
+            </van-cell>
+
+            <van-cell title="生日" size="large" bind:click="showPopup" value="{{birthday}}" />
+            <van-popup show="{{show}}" position="bottom" name="birthday" custom-style="height: 50%;" bind:close="onClose">
+                <van-datetime-picker type="date" bind:confirm="onConfirm" formatter="{{formatter}}" min-date="{{minDate}}" max-date="{{maxDate}}" value="{{Initial}}" />
+            </van-popup>
+
+            <van-cell title="QQ号" size="large">
+                <input value="{{qq}}" type="number" name="qq" placeholder="请在此输入QQ号" />
+            </van-cell>
+
+            <van-cell title="电话号码" size="large">
+                <input value="{{tel}}" type="number" name="tel" placeholder="请在此输入电话" />
+            </van-cell>
+            <van-cell title="自我介绍" size="large" />
+            <view style="background-color: #fff;">
+                <textarea value="{{selfInfo}}" name="selfInfo" class="textarea" placeholder="   请在此输入自我介绍" />
+            </view>
+        </van-cell-group>
+    </view>
+    <button class="save" formType="submit">保存</button>
+</form>

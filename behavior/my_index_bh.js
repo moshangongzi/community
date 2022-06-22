@@ -103,7 +103,7 @@ module.exports = Behavior({
 		},
 
 		setTap: function (e, skin) {
-			let itemList = ['清除缓存', '后台管理'];
+			let itemList = ['退出登录', '后台管理'];
 			wx.showActionSheet({
 				itemList,
 				success: async res => {

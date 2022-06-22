@@ -1,1 +1,5 @@
-/* pages/admin/examine/examine.wxss */
+@import '../../../style/project/base/admin.wxss';
+
+page {
+	background-color: #f8f8f8;
+} 
