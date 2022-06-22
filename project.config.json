@@ -13,11 +13,8 @@
         "autoAudits": false,
         "uglifyFileName": false,
         "uploadWithSourceMap": true,
-        "useIsolateContext": true,
         "enhance": true,
         "useMultiFrameRuntime": true,
-        "useApiHook": true,
-        "useApiHostProcess": true,
         "showShadowRootInWxmlPanel": true,
         "packNpmManually": true,
         "packNpmRelationList": [
@@ -27,8 +24,20 @@
             }
         ],
         "minifyWXSS": true,
+        "useStaticServer": true,
         "showES6CompileOption": false,
-        "minifyWXML": true
+        "checkInvalidKey": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "disableUseStrict": false,
+        "useCompilerPlugins": false,
+        "minifyWXML": true,
+        "useApiHook": true,
+        "useApiHostProcess": true,
+        "useIsolateContext": true
     },
     "compileType": "miniprogram",
     "libVersion": "2.24.6",

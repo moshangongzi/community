@@ -318,3 +318,14 @@
 	font-size: 24rpx;
 	color: #999;
 }
+.join {
+	position: fixed;
+	bottom: 0rpx;
+	left: 0rpx;
+	width: 100%;
+}
+.join button {
+	max-width: 100%;
+	background-color: #2b91d3;
+	color: #fff;
+}

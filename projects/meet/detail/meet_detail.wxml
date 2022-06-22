@@ -1,2 +1,5 @@
 <import src="../../../tpls/project/meet_detail_tpl.wxml" />
 <template is="meetDetailTpl" data="{{meet}}" />
+<view class="join" bindtap="bindJoinTap" data-id="{{meet._id}}">
+    <button>参加活动</button>
+</view>
