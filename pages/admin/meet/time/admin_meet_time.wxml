@@ -1,6 +1,4 @@
 <wxs src="../../../../tpls/wxs/tools.wxs" module="tools" />
-
-<block wx:if="{{isAdmin}}">
 	<view class="main-admin">
 
 		<view class="select-date">
@@ -107,5 +105,3 @@
 			<textarea placeholder-class="phc" placeholder="请输入取消理由 (非必填)，将通知给用户" style="height:110rpx" model:value="{{formReason}}" maxlength="100"></textarea>
 		</view>
 	</cmpt-modal>
-
-</block>

@@ -74,6 +74,7 @@ Page({
         var act_id = e.target.dataset.aid;
         var id = e.target.dataset.id;
         var actlist = [];
+        var memlist = [];
         wx.cloud.database().collection('User').doc(openid)
             .get()
             .then(res => {
@@ -89,6 +90,33 @@ Page({
                     .update({
                         data: {
                             actList: actlist
+                        }
+                    })
+                    .then(res => {
+                        this.del(id);
+                    })
+                    .catch(res => {
+                        console.log('修改失败', res)
+                    })
+            })
+            .catch(err => {
+                console.log('获取操作人失败', err)
+            })
+            wx.cloud.database().collection('activeList').doc(act_id)
+            .get()
+            .then(res => {
+                console.log('获取活动成功', res);
+                if (!res.data.memberList) {
+                    memlist.push(openid)
+                } else {
+                    memlist = res.data.memberList;
+                    memlist.push(openid);
+                }
+                wx.cloud.database().collection('activeList')
+                    .doc(act_id)
+                    .update({
+                        data: {
+                            memberList: memlist
                         }
                     })
                     .then(res => {

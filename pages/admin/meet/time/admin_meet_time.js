@@ -63,7 +63,6 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		if (!AdminBiz.isAdmin(this)) return;
 
 		let parent = pageHelper.getPrevPage(2);
 		if (parent) {

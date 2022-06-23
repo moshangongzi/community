@@ -27,10 +27,11 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		if (!pageHelper.getOptions(this, options, 'meetId')) return;
-
-		if (!AdminBiz.isAdmin(this)) return;
-
+		if(options){
+			this.setData({
+				isLoad: true
+			})
+		}
 		let searchDayStart = timeHelper.time('Y-M-D');
 		let searchDayEnd = timeHelper.time('Y-M-D');
 		this.setData({

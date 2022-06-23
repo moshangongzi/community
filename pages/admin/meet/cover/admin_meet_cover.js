@@ -22,7 +22,6 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		if (!AdminBiz.isAdmin(this)) return;
 
 		let parent = pageHelper.getPrevPage(2);
 		if (!parent) return;
@@ -37,52 +36,6 @@ Page({
 			status,
 			...formStyleSet
 		});
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
-	},
-
-	/**
-	 * 页面相关事件处理函数--监听用户下拉动作
-	 */
-	onPullDownRefresh: function () {
-
-	},
-
-	/**
-	 * 页面上拉触底事件的处理函数
-	 */
-	onReachBottom: function () {
-
-	},
-
-	url: function (e) {
-		pageHelper.url(e, this);
 	},
 
 	bindChooseImgTap: function (e) {
@@ -117,7 +70,7 @@ Page({
 
 		parent.setData({
 			formStyleSet: {
-				desc: dataHelper.fmtText(this.data.desc),
+				// desc: dataHelper.fmtText(this.data.desc),
 				pic: this.data.pic
 			}
 		});
