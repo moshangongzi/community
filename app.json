@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/admin/news/list/admin_news_list",
     "projects/default/index/default_index",
+    "pages/admin/news/list/admin_news_list",
     "pages/admin/news/edit/admin_news_edit",
     "projects/my/index/my_index",
     "projects/about/index/about_index",

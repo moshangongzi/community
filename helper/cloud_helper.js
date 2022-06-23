@@ -140,11 +140,11 @@
  					return;
  				} else if (res.result.code != CODE.SUCC) {
  					if (hint) {
- 						wx.showModal({
- 							title: '温馨提示',
- 							content: '系统开小差了，请稍后重试',
- 							showCancel: false
- 						});
+ 						// wx.showModal({
+ 						// 	title: '温馨提示',
+ 						// 	content: '系统开小差了，请稍后重试',
+ 						// 	showCancel: false
+ 						// });
  					}
  					reject(res.result);
  					return;
