@@ -8,8 +8,8 @@ Component({
 	 */
 	properties: {
 		imgList: {
-			type: Array,
-			value: []
+			type: String,
+			value: ''
 
 		},
 		imgMax: {

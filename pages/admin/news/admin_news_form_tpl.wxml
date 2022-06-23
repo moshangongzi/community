@@ -22,12 +22,11 @@
 		<view wx:if="{{formOrderFocus}}" class="hint-desc error">{{formOrderFocus}}</view>
 
 		<view class="form-group">
-			<view class="action text-bold text-l">简介</view>
-			<view class="action">{{formDesc.length}}/100</view>
+			<view class="action text-bold text-l">详情</view>
 		</view>
 
 		<view class="form-group align-start">
-			<textarea name="content" placeholder-class="phc" placeholder="请输入本文简介，若不填写则直接取内容前100个字作为简介" style="min-height:150rpx" model:value="{{formDesc}}" maxlength="100" focus="{{formDescFocus}}" auto-height="true"></textarea>
+			<textarea name="content" placeholder-class="phc" placeholder="请输入本文简介，若不填写则直接取内容前100个字作为简介" style="min-height:150rpx" model:value="{{formContent}}" maxlength="100" focus="{{formDescFocus}}" auto-height="true"></textarea>
 		</view>
 		<view wx:if="{{formDescFocus}}" class="hint-desc error">{{formDescFocus}}</view>
 
@@ -51,13 +50,7 @@
 			<view class="title-desc text-orange"><text class="icon-info margin-right-xs"></text>必须是您关联的公众号或者业务域名下的文章</view>
 
 		</block>
-		<block wx:else>
-			<view class="form-group arrow" bindtap="url" data-url="../../content/admin_content">
-				<view class="title must">详细内容<text class="text-grey text-normal margin-left-xs">(必填)</text></view>
-				<view class="form-text {{contentDesc=='未填写'?'text-orange':''}}">{{contentDesc}}</view>
-			</view>
-			<view wx:if="{{formContentFocus}}" class="hint-desc error">{{formContentFocus}}</view>
-		</block>
+		
 
 	</view>
 

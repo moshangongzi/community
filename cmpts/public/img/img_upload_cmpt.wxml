@@ -3,13 +3,14 @@
 		{{title}} <text wx:if="{{isShowSize}}" class="text-gray text-normal">(每张大小不超过{{imgUploadSize}}M)</text>
 	</view>
 	<view class="action" wx:if="{{isShowSize}}">
-		{{imgList.length}}/{{imgMax}}
+		1/{{imgMax}}
 	</view>
 </view>
 <view class="form-group padding">
 		<view class="upload-img">
-		<view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="bindPreviewImgTap" data-url="{{imgList[index]}}">
-			<image src='{{imgList[index]}}' mode='aspectFill'></image>
+		<view class="bg-img" bindtap="bindPreviewImgTap" data-url="{{imgList}}">
+		<!-- <view>{{imgList}}111</view> -->
+			<image src='{{imgList}}' mode='aspectFill'></image>
 			<view class="tag bg-red" catchtap="catchDelImgTap" data-index="{{index}}">
 				<text class="icon-close"></text>
 			</view>

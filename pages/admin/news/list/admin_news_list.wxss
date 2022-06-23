@@ -4,3 +4,40 @@ page {
 	background-color: #f8f8f8;
 }
 
+
+/*sort*/
+.tabs {
+	display: flex;
+	font-size: 28rpx;
+	color: #aaa;
+	height: 80rpx;
+	line-height: 80rpx;
+}
+
+
+.cur {
+	font-weight: bold;
+	border-bottom: 5rpx solid orange;
+}
+
+
+.list-scroll-view {
+	display: inline-block;
+	padding: 0 10rpx;
+}
+
+.nav {
+	height: 100rpx;
+	line-height: 100rpx;
+	background-color: #fff;
+}
+
+
+
+
+
+
+
+
+
+

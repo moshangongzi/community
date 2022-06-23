@@ -281,7 +281,7 @@ Component({
 		/**
 		 * 一键回到顶部
 		 */
-		bindTopTap: function () {
+		bindTopTap: function (e) {
 			this.setData({
 				topNum: 0
 			});
@@ -326,6 +326,7 @@ Component({
 
 		// 分类&排序一级菜单选择  
 		bindSortTap: function (e) {
+			console.log('bindSortTap',e);
 			let sortIndex = e.currentTarget.dataset.index; 
 			let sortItems = this.data.sortItems;
 

@@ -25,7 +25,7 @@ Page({
 		// 将两个id存入审批表user_id,act_id
 
 		wx.navigateTo({
-			url: `../join/meet_join?id=${e.currentTarget.dataset.id}`,
+			url: `../join/meet_join?id=${e.currentTarget.dataset.id}&actname=${e.currentTarget.dataset.actname}`,
 		})
 		console.log(e.currentTarget.dataset.id);
 		

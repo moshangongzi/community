@@ -1,4 +1,4 @@
-const AdminBiz = require('../../../../biz/admin_biz.js');
+// const AdminBiz = require('../../../../biz/admin_biz.js');
 const pageHelper = require('../../../../helper/page_helper.js');
 const timeHelper = require('../../../../helper/time_helper.js');
 const cloudHelper = require('../../../../helper/cloud_helper.js');
@@ -6,52 +6,23 @@ const validate = require('../../../../helper/validate.js');
 const AdminNewsBiz = require('../../../../biz/admin_news_biz.js');
 const dataHelper = require('../../../../helper/data_helper.js');
 const setting = require('../../../../setting/setting.js');
-
+const db = wx.cloud.database()
 Page({
 
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
-		isLoad: false,
+		cateIdOptions: ['社团通知','社团简介','社团福利','社团章程','社团招新',]
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: async function (options) {
-		// if (!AdminBiz.isAdmin(this)) return;
-		if (!pageHelper.getOptions(this, options)) return;
-
-		this._loadDetail();
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
+	onLoad(options) {
+		console.log(options.id);
+		// 初始化表单数据
+		this.loadDetail(options.id);
 	},
 
 	/**
@@ -66,66 +37,46 @@ Page({
 		pageHelper.model(this, e);
 	},
 
-	_loadDetail: async function () {
-		// if (!AdminBiz.isAdmin(this)) return;
-
-		let id = this.data.id;
-		if (!id) return;
-
-		if (!this.data.isLoad) this.setData(await AdminNewsBiz.initFormData(id)); // 初始化表单数据
-
-		let params = {
-			id
-		};
-		let opt = {
-			title: 'bar'
-		};
-		let news = await cloudHelper.callCloudData('admin/news_detail', params, opt);
-		if (!news) {
-			this.setData({
-				isLoad: null
-			})
-			return;
-		};
-
-
-		this.setData({
-			isLoad: true,
-
-			imgList: news.NEWS_PIC,
-
-			// 表单数据 
-			formCateId: news.NEWS_CATE_ID,
-			formOrder: news.NEWS_ORDER,
-
-			formType: news.NEWS_TYPE,
-
-			formTitle: news.NEWS_TITLE,
-			formContent: news.NEWS_CONTENT,
-
-			formDesc: news.NEWS_DESC,
-			formUrl: news.NEWS_URL,
-		}, () => {
-			this._setContentDesc();
-		});
+	loadDetail(id) {
+		let news = ''
+		// 根据id拿到数据，对变量进行赋值
+		db.collection('com_notice').doc(id).get({
+			success: res => {
+				console.log(res.data)
+				news = res.data
+				this.setData({
+					imgList: news.pic,
+		
+					// 表单数据 
+					formCateId: news.kind,
+					formOrder: news.NEWS_ORDER,
+		
+					formType: news.NEWS_TYPE,
+		
+					formTitle: news.title,
+					formContent: news.content,
+					formUrl: news.NEWS_URL,
+				});
+				console.log(this.data.imgList);
+			}
+		})
 	},
 
-	_setContentDesc: function () {
-		AdminBiz.setContentDesc(this);
-	},
+	
 
 	/** 
 	 * 数据提交
 	 */
 	bindFormSubmit: async function () {
-		// if (!AdminBiz.isAdmin(this)) return;
 
 		let data = this.data;
+		console.log(data);
 		// 数据校验  by 类型
 		if (data.formType == 0) { //内部
 			if (this.data.formContent.length == 0) {
 				return pageHelper.showModal('详细内容不能为空');
 			}
+			// 检验是否合乎要求
 			data = validate.check(data, AdminNewsBiz.CHECK_FORM, this);
 		} else { //外部
 			data = validate.check(data, AdminNewsBiz.CHECK_FORM_OUT, this);
@@ -197,9 +148,5 @@ Page({
 	switchModel: function (e) {
 		pageHelper.switchModel(this, e);
 	},
-
-	url: function (e) {
-		pageHelper.url(e, this);
-	}
 
 })

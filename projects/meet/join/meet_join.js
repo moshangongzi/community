@@ -6,13 +6,15 @@ Page({
 			name: '',
 			phone: '',
 			studentID: '',
-			Class: ''
+			Class: '',
+			act_name: ''
 		},
 	},
 	onLoad: function (option) {
 		// console.log(option.id);
 		this.setData({
 			'info.act_id': option.id,
+			'info.act_name': option.actname,
 			id: option.id
 		})
 		db.collection('ax_meet').where({

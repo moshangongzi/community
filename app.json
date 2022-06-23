@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/admin/news/list/admin_news_list",
     "projects/default/index/default_index",
+    "pages/admin/news/edit/admin_news_edit",
     "projects/my/index/my_index",
     "projects/about/index/about_index",
     "projects/about/contact/about_contact",
@@ -33,10 +35,9 @@
 		"pages/admin/meet/self/admin_meet_self",
 		"pages/admin/meet/temp/admin_temp_select",
 		"pages/admin/meet/time/admin_meet_time",
-    "pages/admin/news/list/admin_news_list",
+   
     "pages/admin/news/add/admin_news_add",
-    "pages/admin/news/edit/admin_news_edit",
-    "pages/admin/news/content/admin_news_content",
+  
     "pages/admin/setup/about/admin_setup_about",
     "pages/admin/setup/contact/admin_setup_contact",
     "pages/admin/setup/qr/admin_setup_qr",
