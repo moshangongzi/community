@@ -1,10 +1,13 @@
 <!-- <block wx:if="{{isAdmin}}"> -->
-<van-search value="{{inputValue}}" placeholder="请输入要搜索的活动名" use-action-slot bind:change="onChange" bind:search="onSearch">
-	<view slot="action" class="btn mid radius bg-admin text-white margin-right-s" bind:tap="onSearch">搜索</view>
-</van-search>
+<view class="searchFix">
+	<van-search value="{{inputValue}}" placeholder="请输入要搜索的活动名" use-action-slot bind:change="onChange" bind:search="onSearch">
+		<view slot="action" class="btn mid radius bg-admin text-white margin-right-s" bind:tap="onSearch">搜索</view>
+	</van-search>
+</view>
+
 <!-- List Begin -->
 
-<view style="margin-bottom: 60px;">
+<view style="margin-bottom: 60px;margin-top: 43px;">
 	<view class="admin-comm-list">
 		<view wx:if="{{activeList}}" class="load text-grey">共有{{activeList.length}}条符合条件记录 </view>
 		<view class="item" wx:for="{{activeList}}" wx:key="_id">
@@ -14,25 +17,31 @@
 
 			<view class="info">
 				<view class="info-item">
-					<view class="title">状态</view>
+					<view class="title">预约状态</view>
 					<view class="mao">：</view>
 					<view class="content">
-						<text wx:if="{{item.status==0}}" class="text-grey">未开始</text>
-						<text wx:elif="{{item.status==1}}" class="text-black">进行中</text>
-						<text wx:elif="{{item.status==-1}}" class="text-grey">已停止</text>
+						<text wx:if="{{item.status==-1}}" class="text-grey">未开始</text>
+						<text wx:elif="{{item.status==0}}" class="text-black">进行中</text>
+						<text wx:elif="{{item.status==1}}" class="text-grey">已停止</text>
 					</view>
+				</view>
+
+				<view class="info-item">
+					<view class="title">日期</view>
+					<view class="mao">：</view>
+					<view class="content">{{item.date}}</view>
 				</view>
 
 				<view class="info-item">
 					<view class="title">时段</view>
 					<view class="mao">：</view>
-					<view class="content {{item.leaveDay==0?'text-grey':''}}">{{item.leaveDay}}天可用</view>
+					<view class="content">{{item.time}}</view>
 				</view>
 
 				<view class="info-item">
-					<view class="title">创建</view>
+					<view class="title">地点</view>
 					<view class="mao">：</view>
-					<view class="content">{{item.editTime}}</view>
+					<view class="content">{{item.place}}</view>
 				</view>
 
 				<view class="oprt">

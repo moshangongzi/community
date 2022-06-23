@@ -3,7 +3,12 @@
 page {
 	background-color: #f8f8f8;
 }
-
+.searchFix {
+	width: 100%;
+	position: fixed;
+	top: 0px;
+	z-index: 999;
+}
 .creatAct {
 	position: fixed;
 	background-color: #2499f2!important;

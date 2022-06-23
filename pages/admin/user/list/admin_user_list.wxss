@@ -2,4 +2,10 @@
 
 page {
 	background-color: #f8f8f8;
-} 
+}
+
+.searchFix {
+	width: 100%;
+	position: fixed;
+	top: 0px;
+}

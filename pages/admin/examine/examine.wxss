@@ -2,4 +2,27 @@
 
 page {
 	background-color: #f8f8f8;
-} 
+}
+
+.searchFix {
+	width: 100%;
+	position: fixed;
+	top: 0px;
+}
+
+.admin-comm-list {
+	margin-top: 10px;
+}
+
+.check {
+	margin-left: 180rpx;
+	display: inline-block;
+	align-items: center;
+	justify-content: center;
+	padding: 0 20rpx;
+	font-size: 26rpx;
+	border-radius: 8rpx;
+	line-height: 55rpx;
+	height: 55rpx;
+	background-color: #eee;
+}

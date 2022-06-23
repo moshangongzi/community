@@ -1,50 +1,45 @@
-<van-search value="{{inputValue}}" placeholder="请输入要搜索的用户名" use-action-slot bind:change="onChange" bind:search="onSearch">
-	<view slot="action" class="btn mid radius bg-admin text-white margin-right-s" bind:tap="onSearch">搜索</view>
-</van-search>
+<view class="searchFix">
+    <van-search value="{{inputValue}}" placeholder="请输入要审核的活动名" use-action-slot bind:change="onChange" bind:search="onSearch">
+        <view slot="action" class="btn mid radius bg-admin text-white margin-right-s" bind:tap="onSearch">搜索</view>
+    </van-search>
+</view>
 
-<!-- List Begin -->
-<!-- <view class="admin-comm-list">
-	<view wx:if="{{userList}}" class="load text-grey">共有{{userList.length}}条符合条件记录 </view>
-
-	<view class="item" wx:for="{{userList}}" wx:key="id">
-		<view class="header">
-			<view class="left text-cut">
-			{{item.uname}}
-			</view>
-			<view class="right">
-			</view>
-		</view>
-
-		<view class="info">
-			<view class="info-item">
-				<view class="title">学号</view>
-				<view class="mao">：</view>
-				<view class="content">{{item.sid||'未填写'}}</view>
-			</view>
-
-			<view class="info-item">
-				<view class="title">专业班级</view>
-				<view class="mao">：</view>
-				<view class="content">{{item.majorClass||'未填写'}}</view>
-			</view>
-
-			<view class="info-item" bindtap="url" data-type="phone" data-url="{{item.tel}}">
-				<view class="title">手机</view>
-				<view class="mao">：</view>
-				<view class="content">{{item.tel||'未填写'}}
-					<text wx:if="{{item.tel}}" class="icon-phone margin-left-s"></text>
-				</view>
-			</view>
-
-			<view class="info-item">
-				<view class="title">性别</view>
-				<view class="mao">：</view>
-				<view class="content">{{item.sex||'未填写'}}</view>
-			</view>
-
-			<view class="oprt">
-				<view bindtap="bindDelTap" data-id="{{item._id}}" class="btn  margin-right-s"><text class="icon-delete margin-right-xxs text-orange"></text>删除</view>
-			</view>
-		</view>
-	</view>
-</view> -->
+<view class="admin-comm-list">
+    <view wx:if="{{List}}" class="load text-grey">共有{{List.length}}条符合条件记录 </view>
+    <view class="item" wx:for="{{List}}" wx:key="_id">
+        <view class="header">
+            <view class="left text-cut">{{item.act_name}}</view>
+            <view class="right"></view>
+        </view>
+        <view class="info">
+            <view class="info-item">
+                <view class="title">姓名</view>
+                <view class="mao">：</view>
+                <view class="content">{{item.name||'未填写'}}</view>
+            </view>
+            <view class="info-item">
+                <view class="title">学号</view>
+                <view class="mao">：</view>
+                <view class="content">{{item.studentID||'未填写'}}</view>
+            </view>
+            <view class="info-item">
+                <view class="title">专业班级</view>
+                <view class="mao">：</view>
+                <view class="content">{{item.Class||'未填写'}}</view>
+            </view>
+            <view class="info-item" bindtap="url" data-type="phone" data-url="{{item.tel}}">
+                <view class="title">电话</view>
+                <view class="mao">：</view>
+                <view class="content">{{item.phone||'未填写'}}
+                    <text wx:if="{{item.tel}}" class="icon-phone margin-left-s"></text>
+                </view>
+            </view>
+            <view class="check">
+                <view bindtap="no" data-id="{{item._id}}"><text class="icon-delete margin-right-xxs text-orange"></text>不通过</view>
+            </view>
+            <view class="check">
+                <view bindtap="ok" data-id="{{item._id}}" data-aid="{{item.act_id}}" data-oid="{{item._openid}}"><text class="icon-check margin-right-xxs text-darkgreen"></text>通过</view>
+            </view>
+        </view>
+    </view>
+</view>

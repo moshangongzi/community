@@ -12,21 +12,24 @@ Page({
 		activeList:[{
 			_id:'01',
 			title:'折千纸鹤活动',
-			status:'1',
-			leaveDay:'2',
-			editTime:'2022-06-21 13:30:31',
+			status:'0',
+			date:'2022-06-25',
+			time:'13:00-15:00',
+			place:'至诚楼A301'
 		},{
 			_id:'02',
 			title:'折纸玫瑰活动',
-			status:'0',
-			leaveDay:'0',
-			editTime:'10',
+			status:'-1',
+			date:'2022-07-21',
+			time:'13:00-15:00',
+			place:'至诚楼A301'
 		},{
 			_id:'03',
 			title:'折星星活动',
-			status:'-1',
-			leaveDay:'0',
-			editTime:'10',
+			status:'1',
+			date:'2022-06-21',
+			time:'13:00-15:00',
+			place:'至诚楼A301'
 		}]
 	},
 
