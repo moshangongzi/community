@@ -15,7 +15,7 @@ Page({
 
 		// this._setTypeTitle(skin);
 
-		db.collection('ax_meet').get({
+		db.collection('activeList').get({
 			success: res => {
 			 this.setData({
 				'dataList.list':res.data,

@@ -7,7 +7,7 @@ Page({
 			id: option.id
 		})
 		console.log(option.id);
-		db.collection('ax_meet').doc(this.data.id).get({
+		db.collection('activeList').doc(this.data.id).get({
 			success: res => {
 				// res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条
 				//   console.log("fff",res) 

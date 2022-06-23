@@ -1,7 +1,7 @@
 <view wx:if="{{isLoad===null}}" class="margin-top load notexist text-l text-grey"></view>
 <view wx:if="{{isLoad===false}}" class="margin-top load loading text-l text-grey"></view>
 
-<block wx:if="{{isAdmin&&isLoad}}">
+<block wx:if="{{isLoad}}">
 	<view class="main-admin">
 		<view class="table margin-bottom sticky1" style="width:100%">
 			<view class="table-top">

@@ -9,8 +9,8 @@
 
 <view style="margin-bottom: 60px;margin-top: 43px;">
 	<view class="admin-comm-list">
-		<view wx:if="{{activeList}}" class="load text-grey">共有{{activeList.length}}条符合条件记录 </view>
-		<view class="item" wx:for="{{activeList}}" wx:key="_id">
+		<view wx:if="{{actList}}" class="load text-grey">共有{{actList.length}}条符合条件记录 </view>
+		<view class="item" wx:for="{{actList}}" wx:key="_id">
 			<view class="header">
 				<view class="actTitle" bindtap="bindScanTap" data-id="{{item._id}}" data-title="{{item.title}}">{{item.title}}</view>
 			</view>
@@ -45,21 +45,33 @@
 				</view>
 
 				<view class="oprt">
-					<view bindtap="url" data-url="../edit/admin_meet_edit?id={{item._id}}" class="btn margin-right-s">
-						<text class="icon-settings margin-right-xxs text-blue"></text>设置
+					<navigator url="../edit/admin_meet_edit?id={{item._id}}">
+						<view class="btn margin-right-s">
+							<text class="icon-settings margin-right-xxs text-blue"></text>编辑
+						</view>
+					</navigator>
+
+					<navigator url="../record/admin_record_list?meetId={{item._id}}&title={{item.title}}">
+						<view class="btn margin-right-s">名单</view>
+					</navigator>
+
+					<view bindtap="bindStatus" data-id="{{item._id}}" class="btn margin-right-s">
+						<text class="icon-cascades margin-right-xxs text-orange"></text>状态
 					</view>
 
-					<view bindtap="bindRecordSelectTap" data-id="{{item._id}}" data-title="{{item.title}}" class="btn margin-right-s">名单与核销</view>
+					<navigator url="'/pages/meet/detail/meet_detail?id={{item._id}}&title={{item.title}}">
+						<view class="btn margin-right-s">预览</view>
+					</navigator>
 
-					<view bindtap="bindStatusSelectTap" data-id="{{item._id}}" class="btn   margin-right-s"><text class="icon-cascades margin-right-xxs text-orange"></text>状态</view>
-
-					<view bindtap="bindMoreSelectTap" data-id="{{item._id}}" class="btn">更多操作</view>
-
+					<view bindtap="bindDelTap" data-id="{{item._id}}" class="btn">
+						<text class="icon-delete margin-right-xxs text-orange"></text>删除
+					</view>
 				</view>
 			</view>
 		</view>
 	</view>
 </view>
 <!-- List END -->
-
-<button bindtap="url" class="creatAct" data-url="../edit/admin_meet_edit" type="primary">创建活动</button>
+<navigator url="../edit/admin_meet_edit">
+	<button class="creatAct" type="primary">创建活动</button>
+</navigator>

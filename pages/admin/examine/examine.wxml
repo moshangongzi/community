@@ -34,11 +34,9 @@
                     <text wx:if="{{item.tel}}" class="icon-phone margin-left-s"></text>
                 </view>
             </view>
-            <view class="check">
-                <view bindtap="no" data-id="{{item._id}}"><text class="icon-delete margin-right-xxs text-orange"></text>不通过</view>
-            </view>
-            <view class="check">
-                <view bindtap="ok" data-id="{{item._id}}" data-aid="{{item.act_id}}" data-oid="{{item._openid}}"><text class="icon-check margin-right-xxs text-darkgreen"></text>通过</view>
+            <view class="oprt">
+                <view bindtap="no" data-id="{{item._id}}" class="btn margin-right-s"><text class="icon-delete margin-right-xxs text-orange"></text>不通过</view>
+                <view bindtap="ok" data-id="{{item._id}}" data-aid="{{item.act_id}}" data-oid="{{item._openid}}" class="btn margin-right-s"><text class="icon-check margin-right-xxs text-darkgreen"></text>通过</view>
             </view>
         </view>
     </view>

@@ -1,286 +1,207 @@
-const AdminBiz = require('../../../../biz/admin_biz.js');
-const pageHelper = require('../../../../helper/page_helper.js');
-const bizHelper = require('../../../../biz/biz_helper.js');
-const cloudHelper = require('../../../../helper/cloud_helper.js');
-const timeHelper = require('../../../../helper/time_helper.js');
-const validate = require('../../../../helper/validate.js');
-const AdminMeetBiz = require('../../../../biz/admin_meet_biz.js');
-
+let db = wx.cloud.database().collection('activeList');
 Page({
-
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
 		isLoad: false,
 		id: null,
+		show: false,
 
+		title: '',
+		formTitleFocus: '',
+		place: '',
+		formPlaceFocus: '',
+		imgSrc: '',
+		formStyleSet: {},
+		formStyleSetFocus: '',
+		date: '',
+		formDateFocus: '',
+		time: '',
+		formTimeFocus: '',
+		contentDesc: '',
+		formContentDescFocus: ''
 	},
-
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
 	onLoad: async function (options) {
-		if (!AdminBiz.isAdmin(this)) return;
-		pageHelper.getOptions(this, options);
-
-		this.setData(await AdminMeetBiz.initFormData()); // 初始化表单数据   
-
-		await this._loadDetail();
-
-		this._setContentDesc();
-	},
-
-	_loadDetail: async function () {
-		let id = this.data.id;
-		if (!id) return;
-
-		pageHelper.formSetBarTitleByAddEdit(id, '后台-活动/预约');
-
-		let params = {
-			id
-		};
-		let opt = {
-			title: 'bar'
-		};
-		let meet = await cloudHelper.callCloudData('admin/meet_detail', params, opt);
-
-		if (!meet) {
+		if (options.id) {
 			this.setData({
-				isLoad: null
+				id: options.id,
+				isLoad: true
 			})
-			return;
+			this.getActDetail()
 		}
-
+	},
+	getActDetail() {
+		db.doc(this.data.id).get()
+			.then(res => {
+				this.setData({
+					title: res.data.title,
+					place: res.data.place,
+					['formStyleSet.pic']: res.data.imgSrc,
+					imgSrc: res.data.imgSrc,
+					date: res.data.date,
+					time: res.data.time,
+					contentDesc: res.data.content,
+				})
+			})
+			.catch(err => {
+				console.log('获取活动详情失败', err)
+			})
+	},
+	//选择日期的相关函数开始
+	onDisplay() {
+		this.setData({ show: true });
+	},
+	onClose() {
+		console.log('进入了onClose');
+		this.setData({ show: false });
+	},
+	onConfirm(e) {
 		this.setData({
-			isLoad: true,
-
-
-			// 表单数据   
-			formTitle: meet.MEET_TITLE,
-			formTypeId: meet.MEET_TYPE_ID,
-			formContent: meet.MEET_CONTENT,
-			formOrder: meet.MEET_ORDER,
-			formStyleSet: meet.MEET_STYLE_SET,
-
-			formDaysSet: meet.MEET_DAYS_SET,
-
-			formIsShowLimit: meet.MEET_IS_SHOW_LIMIT,
-
-			formFormSet: meet.MEET_FORM_SET,
+			show: false,
+			date: this.changeTime(e.detail),
 		});
 	},
-
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
+	//格式化日期函数
+	changeTime(value) {
+		var date = new Date(value);
+		let Y = date.getFullYear() + '-';
+		let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+		let D = date.getDate() + ' ';
+		return Y + M + D;
 	},
+	//选择日期的相关函数结束
 
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
-	},
 
 	/**
 	 * 页面相关事件处理函数--监听用户下拉动作
 	 */
-	onPullDownRefresh: async function () {
-		await this._loadDetail();
-		wx.stopPullDownRefresh();
-	},
+	// onPullDownRefresh: async function () {
+	// 	await this._loadDetail();
+	// 	wx.stopPullDownRefresh();
+	// },
 
-	model: function (e) {
-		pageHelper.model(this, e);
-	},
+	// model: function (e) {
+	// 	pageHelper.model(this, e);
+	// },
 
-	bindFormSetCmpt: function (e) {
-		this.setData({
-			formFormSet: e.detail,
-		});
-	},
-
-	bindFormAddSubmit: async function () {
-		pageHelper.formClearFocus(this);
-
-		if (!AdminBiz.isAdmin(this)) return;
-
-		let data = this.data;
-		if (data.formTitle.length <= 0) return pageHelper.formHint(this, 'formTitle', '请填写「标题」');
-
-		if (data.formTypeId.length <= 0) return pageHelper.formHint(this, 'formTypeId', '请选择「分类」');
-
-		if (data.formStyleSet.pic.length <= 0) {
-			pageHelper.anchor('formStyleSet', this);
-			return pageHelper.formHint(this, 'formStyleSet', '封面图片未设置');
+	// bindFormSetCmpt: function (e) {
+	// 	this.setData({
+	// 		formFormSet: e.detail,
+	// 	});
+	// },
+	//检查是否填写必填项
+	Submit() {
+		if (this.data.title.length <= 0) {
+			wx.showToast({
+				icon: 'none',
+				title: '请填写「标题」',
+			})
+			this.setData({
+				formTitleFocus: '请填写「标题」'
+			})
 		}
-		if (data.formDaysSet.length <= 0) {
-			pageHelper.anchor('formDaysSet', this);
-			return pageHelper.formHint(this, 'formDaysSet', '请配置「可预约时段」');
+		else if (this.data.place.length <= 0) {
+			wx.showToast({
+				icon: 'none',
+				title: '请填写「地点」',
+			})
+			this.setData({
+				formPlaceFocus: '请填写「地点」'
+			})
 		}
-		if (data.formFormSet.length <= 0) return pageHelper.showModal('请至少设置一项「用户填写资料」');
-
-		if (data.contentDesc.includes('未填写'))
-			return pageHelper.formHint(this, 'formContent', '请填写「详细介绍」');
-
-		data = validate.check(data, AdminMeetBiz.CHECK_FORM, this);
-		if (!data) return;
-		data.typeName = AdminMeetBiz.getTypeName(data.typeId);
-
-		try {
-			// 先创建，再上传 
-			let result = await cloudHelper.callCloudSumbit('admin/meet_insert', data);
-			let meetId = result.data.id;
-
-			let formContent = this.data.formContent;
-			if (formContent && formContent.length > 0) {
-				wx.showLoading({
-					title: '提交中...',
-					mask: true
-				});
-				await AdminMeetBiz.updateMeetCotnentPic(meetId, formContent, this);
+		else if (this.data.formStyleSet.pic == undefined) {
+			wx.showToast({
+				icon: 'none',
+				title: '请上传「封面」',
+			})
+			this.setData({
+				formStyleSetFocus: '请上传「封面」'
+			})
+		}
+		else if (this.data.date.length <= 0) {
+			wx.showToast({
+				icon: 'none',
+				title: '请填写「活动日期」',
+			})
+			this.setData({
+				formDateFocus: '请填写「活动日期」'
+			})
+		}
+		else if (this.data.time.length <= 0) {
+			wx.showToast({
+				icon: 'none',
+				title: '请填写「活动时段」',
+			})
+			this.setData({
+				formTimeFocus: '请填写「活动时段」'
+			})
+		}
+		else if (this.data.contentDesc.length <= 0) {
+			wx.showToast({
+				icon: 'none',
+				title: '请填写「详细介绍」',
+			})
+			this.setData({
+				formContentDescFocus: '请填写「详细介绍」'
+			})
+		}
+		else {
+			var that = this;
+			if (!this.data.imgSrc) {
+				wx.cloud.uploadFile({//上传至微信云存储
+					cloudPath: 'actImage/' + new Date().getTime() + "_.jpg",
+					filePath: that.data.formStyleSet.pic,// 本地文件路径
+					success: res => {
+						that.setData({
+							imgSrc: res.fileID
+						})
+						that.creatAct()
+					}
+				})
+			} else {
+				this.saveAct();
 			}
-
-			// 样式 提交处理
-			let formStyleSet = this.data.formStyleSet;
-			wx.showLoading({
-				title: '提交中...',
-				mask: true
-			});
-			if (!await AdminMeetBiz.updateMeetStyleSet(meetId, formStyleSet, this)) return;
-
-			let callback = async function () {
-				bizHelper.removeCacheList('admin-meet');
-				bizHelper.removeCacheList('meet-list');
-				wx.navigateBack();
-
+		}
+	},
+	//创建活动
+	creatAct() {
+		db.add({
+			data: {
+				title: this.data.title,
+				place: this.data.place,
+				imgSrc: this.data.imgSrc,
+				date: this.data.date,
+				time: this.data.time,
+				content: this.data.contentDesc,
+				status: '-1'
 			}
-			pageHelper.showSuccToast('添加成功', 2000, callback);
-
-		} catch (err) {
-			console.log(err);
-		}
-
+		})
+			.then(res => {
+				wx.showToast({
+				  title: '创建成功！',
+				})
+			})
+			.catch(err => {
+				console.log('添加失败', err)
+			})
 	},
-
-	bindFormEditSubmit: async function () {
-		pageHelper.formClearFocus(this);
-
-		if (!AdminBiz.isAdmin(this)) return;
-
-		let data = this.data;
-		if (data.formTitle.length <= 0) return pageHelper.formHint(this, 'formTitle', '请填写「标题」');
-
-		if (data.formTypeId.length <= 0) return pageHelper.formHint(this, 'formTypeId', '请选择「分类」');
-
-		if (data.formStyleSet.pic.length <= 0) {
-			pageHelper.anchor('formStyleSet', this);
-			return pageHelper.formHint(this, 'formStyleSet', '封面图片未设置');
-		}
-		if (data.formDaysSet.length <= 0) {
-			pageHelper.anchor('formDaysSet', this);
-			return pageHelper.formHint(this, 'formDaysSet', '请配置「可预约时段」');
-		}
-		if (data.formFormSet.length <= 0) return pageHelper.showModal('请至少设置一项「用户填写资料」');
-
-		data = validate.check(data, AdminMeetBiz.CHECK_FORM, this);
-		if (!data) return;
-		data.typeName = AdminMeetBiz.getTypeName(data.typeId);
-
-		try {
-			let meetId = this.data.id;
-			data.id = meetId;
-
-			// 先修改，再上传 
-			await cloudHelper.callCloudSumbit('admin/meet_edit', data);
-
-			// 富文本 提交处理
-			let formContent = this.data.formContent;
-			wx.showLoading({
-				title: '提交中...',
-				mask: true
-			});
-			if (!await AdminMeetBiz.updateMeetCotnentPic(meetId, formContent, this)) return;
-
-
-			// 样式 提交处理
-			let formStyleSet = this.data.formStyleSet;
-			wx.showLoading({
-				title: '提交中...',
-				mask: true
-			});
-			if (!await AdminMeetBiz.updateMeetStyleSet(meetId, formStyleSet, this)) return;
-
-
-			let callback = async function () { 
-				// 更新列表页面数据
-				let node = {
-					'MEET_TITLE': data.title,
-					'MEET_TYPE_NAME': data.typeName,
-					'MEET_DAYS_SET': data.daysSet,
-					'MEET_FORM_SET': data.formSet,
-					'MEET_EDIT_TIME': timeHelper.time('Y-M-D h:m:s'),
-					'leaveDay': AdminMeetBiz.getLeaveDay(data.daysSet)
-				}
-				pageHelper.modifyPrevPageListNodeObject(meetId, node);
-				wx.navigateBack();
-
+	//保存活动
+	saveAct() {
+		db.doc(this.data.id).update({
+			data: {
+				title: this.data.title,
+				place: this.data.place,
+				imgSrc: this.data.imgSrc,
+				date: this.data.date,
+				time: this.data.time,
+				content: this.data.contentDesc,
 			}
-			pageHelper.showSuccToast('编辑成功', 2000, callback);
-
-		} catch (err) {
-			console.log(err);
-		}
-
-	},
-
-
-	bindMyImgUploadListener: function (e) {
-		this.setData({
-			imgList: e.detail
-		});
-	},
-
-	switchModel: function (e) {
-		pageHelper.switchModel(this, e);
-	},
-
-	url: function (e) {
-		pageHelper.url(e, this);
-	},
-
-	_setContentDesc: function () {
-		let contentDesc = '未填写';
-		let content = this.data.formContent;
-		let imgCnt = 0;
-		let textCnt = 0;
-		for (let k in content) {
-			if (content[k].type == 'img') imgCnt++;
-			if (content[k].type == 'text') textCnt++;
-		}
-
-		if (imgCnt || textCnt) {
-			contentDesc = textCnt + '段文字，' + imgCnt + '张图片';
-		}
-		this.setData({
-			contentDesc
-		});
+		})
+			.then(res => {
+				wx.showToast({
+					title: '修改成功！',
+				  })
+			})
+			.catch(err => {
+				console.log('修改失败', err)
+			})
 	}
-
 })

@@ -1,12 +1,6 @@
 <view class="main-admin">
 	<view class="form-box-main">
 		<view class="form-box shadow">
-			<!--
-			<view class="form-group">
-				<view class="title must">样式</view>
-				<cmpt-picker mark="cover" style="flex:1" model:item="{{mode}}" sourceDataStr="upimg=上图下文样式,leftbig=左图右文样式,bigtext=大标题样式" />
-			</view> 
-			 -->
 
 			<view class="form-group">
 				<view class="action text-bold text-l">
@@ -27,9 +21,9 @@
 				<view class="cover-img">
 					<image lazy-load="{{true}}" class="loading" mode='aspectFill' wx:if="{{pic}}" src="{{pic}}" bindtap="url" data-type='img' data-url="{{pic}}"></image>
 					<view wx:if="{{pic}}" class="close-img" catchtap="catchDelImgTap"><text class="icon-refresh margin-left-xs"></text><text class="test-admin margin-left-xs" style="font-size:32rpx">更换图片</text></view>
-					<view class="upload-img"  wx:if="{{!pic}}" catchtap="bindChooseImgTap"><text class="icon-cameraadd"></text><text class="test-admin" style="font-size:32rpx">上传图片</text></view>
+					<view class="upload-img" wx:if="{{!pic}}" catchtap="bindChooseImgTap"><text class="icon-cameraadd"></text><text class="test-admin" style="font-size:32rpx">上传图片</text></view>
 				</view>
-			</view> 
+			</view>
 		</view>
 	</view>
 
@@ -47,7 +41,7 @@
 					<view class="leftbig-desc">
 						<text class="content-cut-three">{{desc||'简要描述未填写'}}</text>
 					</view>
-					<view class="data"> 
+					<view class="data">
 						<view class="meet-status"><text class="icon-remind margin-right-xxs"></text>{{status||'9天可预约'}}</view>
 					</view>
 
@@ -64,7 +58,8 @@
 
 
 <view class="btn-bottom-admin">
-	<view bindtap="url" data-type="back" class="return">不保存,返回</view>
+	<view class="return">
+		<navigator open-type='navigateBack'>不保存,返回</navigator>
+	</view>
 	<view bindtap="bindSaveTap" class="save">保存封面设置</view>
 </view>
-

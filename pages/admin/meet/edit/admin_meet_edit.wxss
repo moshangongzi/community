@@ -1,5 +1,12 @@
 @import '../../../../style/project/base/admin.wxss';
-
+.textarea {
+	margin: 0px auto;
+	margin-bottom: 20px;
+    padding: 30rpx;
+    width: 84%;
+    height:300rpx;
+    background-color:rgb(240, 240, 240);
+}
 
 .main-admin {
 	padding: 20rpx 0rpx;

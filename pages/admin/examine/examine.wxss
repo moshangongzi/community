@@ -14,7 +14,7 @@ page {
 	margin-top: 10px;
 }
 
-.check {
+/* .check {
 	margin-left: 180rpx;
 	display: inline-block;
 	align-items: center;
@@ -25,4 +25,4 @@ page {
 	line-height: 55rpx;
 	height: 55rpx;
 	background-color: #eee;
-}
+} */
