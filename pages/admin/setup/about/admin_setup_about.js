@@ -84,43 +84,46 @@ Page({
 	 * 数据提交
 	 */
 	bindFormSubmit: async function () {
+		wx.showToast({
+			title: '提交成功',
+		  })
 		// if (!AdminBiz.isAdmin(this)) return;
 
-		let data = this.data;
+		// let data = this.data;
 
-		// 数据校验 
-		let rules = {
-			about: 'formAbout|must|string|min:10|max:50000|name=关于我们',
-		}
-		data = validate.check(data, rules, this);
-		if (!data) return;
+		// // 数据校验 
+		// let rules = {
+		// 	about: 'formAbout|must|string|min:10|max:50000|name=关于我们',
+		// }
+		// data = validate.check(data, rules, this);
+		// if (!data) return;
 
-		try {
-			// 图片上传到云空间
-			let aboutPic = this.data.formAboutPic;
-			if (aboutPic.length > 0) {
-				wx.showLoading({
-					title: '图片上传中',
-				});
-			}
+		// try {
+		// 	// 图片上传到云空间
+		// 	let aboutPic = this.data.formAboutPic;
+		// 	if (aboutPic.length > 0) {
+		// 		wx.showLoading({
+		// 			title: '图片上传中',
+		// 		});
+		// 	}
 
-			// aboutPic = await cloudHelper.transTempPics(aboutPic, setting.SETUP_PIC_PATH, '');
+		// 	// aboutPic = await cloudHelper.transTempPics(aboutPic, setting.SETUP_PIC_PATH, '');
 
-			data.aboutPic = aboutPic;
-			// await cloudHelper.callCloudSumbit('admin/setup_about', data).then(res => {
-			// 	let callback = () => {
-			// 		wx.navigateBack({
-			// 			delta: 0,
-			// 		});
-			// 	}
-			// 	pageHelper.showSuccToast('编辑成功', 1500, callback);
-			// });
+		// 	data.aboutPic = aboutPic;
+		// 	// await cloudHelper.callCloudSumbit('admin/setup_about', data).then(res => {
+		// 	// 	let callback = () => {
+		// 	// 		wx.navigateBack({
+		// 	// 			delta: 0,
+		// 	// 		});
+		// 	// 	}
+		// 	// 	pageHelper.showSuccToast('编辑成功', 1500, callback);
+		// 	// });
 
 
 
-		} catch (err) {
-			// console.log(err);
-		}
+		// } catch (err) {
+		// 	// console.log(err);
+		// }
 
 	},
 

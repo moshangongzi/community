@@ -94,47 +94,50 @@ Page({
 	 * 数据提交
 	 */
 	bindFormSubmit: async function () {
+		wx.showToast({
+		  title: '提交成功',
+		})
 		// if (!AdminBiz.isAdmin(this)) return;
 
-		let data = this.data;
+		// let data = this.data;
 
-		// 数据校验 
-		let rules = {
-			address: 'formAddress|name=地址',
-			phone: 'formPhone|name=电话',
-		}
-		data = validate.check(data, rules, this);
-		if (!data) return;
+		// // 数据校验 
+		// let rules = {
+		// 	address: 'formAddress|name=地址',
+		// 	phone: 'formPhone|name=电话',
+		// }
+		// data = validate.check(data, rules, this);
+		// if (!data) return;
 
-		try {
-			// 图片上传到云空间
-			let servicePic = this.data.formServicePic;
-			let officePic = this.data.formOfficePic;
+		// try {
+		// 	// 图片上传到云空间
+		// 	let servicePic = this.data.formServicePic;
+		// 	let officePic = this.data.formOfficePic;
 
-			if (servicePic.length > 0 || officePic.length > 0) {
-				wx.showLoading({
-					title: '图片上传中',
-				});
-			}
+		// 	if (servicePic.length > 0 || officePic.length > 0) {
+		// 		wx.showLoading({
+		// 			title: '图片上传中',
+		// 		});
+		// 	}
 
-			servicePic = await cloudHelper.transTempPics(servicePic, setting.SETUP_PIC_PATH, '');
-			officePic = await cloudHelper.transTempPics(officePic, setting.SETUP_PIC_PATH, '');
+		// 	servicePic = await cloudHelper.transTempPics(servicePic, setting.SETUP_PIC_PATH, '');
+		// 	officePic = await cloudHelper.transTempPics(officePic, setting.SETUP_PIC_PATH, '');
 
 
-			data.servicePic = servicePic;
-			data.officePic = officePic;
+		// 	data.servicePic = servicePic;
+		// 	data.officePic = officePic;
 
-			await cloudHelper.callCloudSumbit('admin/setup_contact', data).then(res => {
-				let callback = () => {
-					wx.navigateBack({
-						delta: 0,
-					});
-				}
-				pageHelper.showSuccToast('修改成功', 1500, callback);
-			});
-		} catch (err) {
-			console.log(err);
-		}
+		// 	await cloudHelper.callCloudSumbit('admin/setup_contact', data).then(res => {
+		// 		let callback = () => {
+		// 			wx.navigateBack({
+		// 				delta: 0,
+		// 			});
+		// 		}
+		// 		pageHelper.showSuccToast('修改成功', 1500, callback);
+		// 	});
+		// } catch (err) {
+		// 	console.log(err);
+		// }
 
 	},
 
