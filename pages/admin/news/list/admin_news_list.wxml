@@ -1,5 +1,5 @@
 <block>
-	<view slot="searchEnd">
+	<view slot="searchEnd" class="btnview">
 		<button bindtap="url" data-url="../add/admin_news_add" class="btn radius bg-admin text-white margin-right-s"><text class="icon-roundadd margin-right-xxs"></text>创建文章</button>
 	</view>
 	<view class="nav">

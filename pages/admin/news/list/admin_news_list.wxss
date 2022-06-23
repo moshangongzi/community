@@ -4,6 +4,22 @@ page {
 	background-color: #f8f8f8;
 }
 
+.btnview {
+	z-index: 9999;
+	position: fixed;
+	left: 0rpx;
+	bottom: 0rpx;
+	width: 100%;
+	height: 100rpx;
+	background-color: pink;
+}
+
+.btnview button {
+	min-width: 100%;
+	min-height: 100rpx;
+	font-size: 35rpx;
+}
+
 
 /*sort*/
 .tabs {
@@ -30,6 +46,45 @@ page {
 	height: 100rpx;
 	line-height: 100rpx;
 	background-color: #fff;
+}
+
+
+
+.picker-cmpt {
+	line-height: 100rpx;
+	font-size: 28rpx;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
+	text-align: right;
+	padding-right: 40rpx;
+}
+
+.disabled {
+	background-color: #eee;
+	color:#999; 
+}
+
+.picker-cmpt::before {
+	position: absolute;
+	top: 0;
+	right: 30rpx;
+	bottom: 0;
+	display: block;
+	margin: auto;
+	width: 30rpx;
+	height: 30rpx;
+	color: var(--grey);
+	content: "\e6a3";
+	text-align: center;
+	font-size: 34rpx;
+	font-family: "icon";
+	line-height: 30rpx;
+	margin-top: auto;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
 }
 
 

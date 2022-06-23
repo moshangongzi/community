@@ -207,6 +207,7 @@ Component({
 
 		// 触发改变
 		bindChange: function (e) {
+			console.log(e.detail.value);
 			let idx = e.detail.value;
 			let val = null;
 

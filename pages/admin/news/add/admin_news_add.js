@@ -4,128 +4,116 @@ const bizHelper = require('../../../../biz/biz_helper.js');
 const cloudHelper = require('../../../../helper/cloud_helper.js');
 const validate = require('../../../../helper/validate.js');
 const AdminNewsBiz = require('../../../../biz/admin_news_biz.js');
-
+const db = wx.cloud.database()
 Page({
 
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
-
+		formCateId: 1,
+		cateIdOptions: ['社团通知', '社团简介', '社团福利', '社团章程', '社团招新',],
+		imgList: '',
+		formOrder: '',
+		formType: '',
+		formTitle: '',
+		formContent: '',
+		formUrl: '',
+		time: ''
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		// if (!AdminBiz.isAdmin(this)) return;
-
-		this.setData(await AdminNewsBiz.initFormData()); // 初始化表单数据
 		this.setData({
 			isLoad: true
 		});
-
-		this._setContentDesc();
-	},
-
-	_setContentDesc: function () {
-		AdminBiz.setContentDesc(this);
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
 	},
 
 	model: function (e) {
 		pageHelper.model(this, e);
 	},
 
+	//格式化日期函数
+	changeTime(value) {
+		var date = new Date(value);
+		let Y = date.getFullYear() + '-';
+		let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+		let D = date.getDate() + ' ';
+		return Y + M + D;
+	},
+
 	/** 
 	 * 数据提交
 	 */
 	bindFormSubmit: async function () {
-		// if (!AdminBiz.isAdmin(this)) return;
-
-		let data = this.data;
-		// 数据校验  by 类型
-		if (data.formType == 0) { // 内部
-			if (this.data.formContent.length == 0) {
-				return pageHelper.showModal('详细内容不能为空');
-			}
-			data = validate.check(data, AdminNewsBiz.CHECK_FORM, this);
-		} else { // 外部
-			data = validate.check(data, AdminNewsBiz.CHECK_FORM_OUT, this);
+		this.setData({
+			time: this.changeTime(new Date().getTime())
+		})
+		console.log(this.data.time);
+		// let data = this.data;
+		// console.log(data);
+		// 数据校验  
+		if (this.data.formContent.length == 0 || this.data.formOrder == '' || this.data.formTitle == '') {
+			return pageHelper.showModal('带*号的选项不能为空');
 		}
-
-		if (!data) return;
-		data.cateName = AdminNewsBiz.getCateName(data.cateId);
-
-
-		try {
-			if (this.data.imgList.length == 0) {
-				return pageHelper.showModal('请上传封面图');
-			}
-
-			// 提取简介
-			data.desc = AdminNewsBiz.getDesc(data.desc, this.data.formContent);
-
-			// 先创建，再上传 
-			let result = await cloudHelper.callCloudSumbit('admin/news_insert', data);
-			let newsId = result.data.id;
-
-			// 图片 提交处理 
-			wx.showLoading({
-				title: '提交中...',
-				mask: true
-			});
-			let imgList = this.data.imgList;
-			await AdminNewsBiz.updateNewsPic(newsId, imgList);
-
-			let formContent = this.data.formContent;
-			if (formContent && formContent.length > 0) {
-				wx.showLoading({
-					title: '提交中...',
-					mask: true
-				});
-				await AdminNewsBiz.updateNewsCotnentPic(newsId, formContent, this);
-			}
-
-			let callback = async function () {
-				bizHelper.removeCacheList('admin-news');
-				bizHelper.removeCacheList('news-list');
-				wx.navigateBack();
-
-			}
-			pageHelper.showSuccToast('添加成功', 2000, callback);
-
-		} catch (err) {
-			console.log(err);
+		if (parseInt(this.data.formOrder) < 0) {
+			return pageHelper.showModal('排序号只能大于等于0');
 		}
+		// console.log('bindFormSubmit', this.data.imgList);
+	
+		
+		// 修改数据
+		db.collection('com_notice').add({
+			// data 传入需要局部更新的数据
+			data: {
+				title: this.data.formTitle,
+				kind: this.data.formCateId,
+				NEWS_ORDER: this.data.formOrder,
+				content: this.data.formContent,
+				NEWS_TYPE: this.data.formType,
+				NEWS_URL: this.data.formUrl,
+				pic: this.data.imgList,
+				time:this.data.time,
+				type: 'news',
+				new_cate_name: this.data.cateIdOptions[this.data.formCateId-1],
+				NEWS_STATUS: 1,
+				NEWS_HOME: 0
+			},
+			success: res => {
+				console.log(res)
+				wx.showToast({
+					title: '添加成功',
+				})
+			}, fail: err => {
+				console.log(err);
+			}
+		})
+		console.log('ok');
+	},
 
+	// 选择图片
+	bindChooseImgTap: function (e) {
+		wx.chooseImage({
+			sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
+			sourceType: ['album', 'camera'], //从相册选择
+			success: (res) => {
+				console.log('图片', res.tempFilePaths[0]);
+				wx.cloud.uploadFile({//上传至微信云存储
+					cloudPath: 'com_notice/社团简介章程福利/' + new Date().getTime() + "_.png",
+					filePath: res.tempFilePaths[0],// 本地文件路径
+					success: res => {
+						console.log(res.fileID);
+						this.setData({
+							imgList: res.fileID
+						})
+						console.log(this.data.imgList);
+
+					}
+				})
+			}
+		});
 	},
 
 

@@ -79,42 +79,19 @@ Component({
 						title: '图片校验中',
 						mask: true
 					});
-
-					for (let k = 0; k < res.tempFiles.length; k++) {
-						let size = res.tempFiles[k].size;
-						let path = res.tempFiles[k].path;
-						if (!contentCheckHelper.imgTypeCheck(path)) {
-							wx.hideLoading();
-							return pageHelper.showNoneToast('只能上传png、jpg、jpeg格式', 3000);
+					console.log('图片',res.tempFilePaths[0]);
+					wx.cloud.uploadFile({//上传至微信云存储
+						cloudPath: 'com_notice/社团简介章程福利/' + new Date().getTime() + "_.png",
+						filePath: res.tempFilePaths[0],// 本地文件路径
+						success: res => {
+							console.log(res.fileID);
+							that.setData({
+								imgList: res.fileID
+							})
+							console.log(this.data.imgList);
+							
 						}
-
-						let imageMaxSize = 1024 * 1000 * this.data.imgUploadSize;
-						if (!contentCheckHelper.imgSizeCheck(size, imageMaxSize)) {
-							wx.hideLoading();
-							return pageHelper.showNoneToast('单张图片大小不能超过 ' + this.data.imgUploadSize + 'M', 3000);
-						}
-
-
-						//  读取文件流，云校验 
-						//let imgData = wx.getFileSystemManager().readFileSync(path, 'base64');
-
-						//console.log('imgData size=' + imgData.length);
-
-						if (this.data.isCheck) {
-							let check = await contentCheckHelper.imgCheck(path);
-							if (!check) {
-								wx.hideLoading();
-								return pageHelper.showNoneToast('存在不合适的图片, 已屏蔽', 3000);
-							}
-						}
-
-
-						this.setData({
-							imgList: this.data.imgList.concat(path)
-						});
-						this.triggerEvent('upload', this.data.imgList);
-
-					}
+					})
 
 					wx.hideLoading();
 				}
@@ -134,9 +111,9 @@ Component({
 		catchDelImgTap: function (e) {
 			let that = this;
 			let callback = function () {
-				that.data.imgList.splice(e.currentTarget.dataset.index, 1);
+				// that.data.imgList;
 				that.setData({
-					imgList: that.data.imgList
+					imgList: ''
 				});
 				that.triggerEvent('upload', that.data.imgList);
 			}

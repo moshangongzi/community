@@ -1,4 +1,5 @@
 <template name="newsForm">
+
 	<view class="form-box shadow">
 		<view class="form-group">
 			<view class="title must">标题</view>
@@ -11,7 +12,12 @@
 
 		<view class="form-group arrow">
 			<view class="title must">分类</view>
-			<cmpt-picker id="cate-picker" sourceData="{{cateIdOptions}}" bind:select="url" data-type="picker" data-item="formCateId" item="{{formCateId}}"> </cmpt-picker>
+			<picker bindchange="bindPickerChange" value="{{formCateId}}" range="{{cateIdOptions}}">
+				<view class="picker">
+					{{cateIdOptions[formCateId-1]}}
+				</view>
+			</picker>
+			<!-- <cmpt-picker id="cate-picker" sourceData="{{cateIdOptions}}" data-type="picker" data-item="formCateId" item="{{formCateId}}"> </cmpt-picker> -->
 		</view>
 		<view wx:if="{{formCateIdFocus}}" class="hint-desc error">{{formCateIdFocus}}</view>
 
@@ -22,7 +28,7 @@
 		<view wx:if="{{formOrderFocus}}" class="hint-desc error">{{formOrderFocus}}</view>
 
 		<view class="form-group">
-			<view class="action text-bold text-l">详情</view>
+			<view class="action text-bold text-l title must">详情</view>
 		</view>
 
 		<view class="form-group align-start">
@@ -50,13 +56,39 @@
 			<view class="title-desc text-orange"><text class="icon-info margin-right-xs"></text>必须是您关联的公众号或者业务域名下的文章</view>
 
 		</block>
-		
+
 
 	</view>
 
 	<view class="form-box shadow">
+		<view class="form-group">
+			<view class="title">
+				*封面图上传 (必填) <text class="text-gray text-normal">(每张大小不超过{{10}}M)</text>
+			</view>
+			<view class="action" wx:if="{{isShowSize}}">
+				1/1
+			</view>
+		</view>
+		<view class="form-group padding">
+			<view class="upload-img">
+				<view class="bg-img" wx:if="{{imgList}}">
+					<!-- <view>{{imgList}}111</view> -->
+					<image src='{{imgList}}' mode='aspectFill'></image>
+					<view class="tag bg-red" catchtap="catchDelImgTap" >
+						<text class="icon-close"></text>
+					</view>
+
+					<view wx:if="{{isShowNo}}"  class="bg-olive img-no">
+						<text>#{{index}}</text>
+					</view>
+				</view>
+				<view class="solid" bindtap="bindChooseImgTap" wx:if="{{imgList.length < 1}}">
+					<text class="icon-cameraadd"></text>
+				</view>
+			</view>
+		</view>
 		<!-- img upload begin -->
-		<cmpt-img-upload imgMax="{{1}}" title="*封面图上传 (必填)" isCheck="{{false}}" imgUploadSize="{{10}}" imgList="{{imgList}}" bind:upload="bindImgUploadCmpt" />
+		<!-- <cmpt-img-upload imgMax="{{1}}" title="*封面图上传 (必填)" isCheck="{{false}}" imgUploadSize="{{10}}" imgList="{{imgList}}" bind:upload="bindImgUploadCmpt" /> -->
 		<!-- img upload end -->
 	</view>
 

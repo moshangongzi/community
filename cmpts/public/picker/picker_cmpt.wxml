@@ -6,9 +6,9 @@
 	<slot wx:else />
 </picker>
 
-<picker class="{{disabled?'disabled':''}}" wx:if="{{steps>1}}" mode="multiSelector" value="{{idx}}" range="{{options}}" range-key="{{labelKey}}" bindtap="bindTap" bindchange="bindChange" disabled="{{disabled}}">
+<!-- <picker class="{{disabled?'disabled':''}}" wx:if="{{steps>1}}" mode="multiSelector" value="{{idx}}" range="{{options}}" range-key="{{labelKey}}" bindtap="bindTap" bindchange="bindChange" disabled="{{disabled}}">
 	<view wx:if="{{!isSlot}}" class="picker-cmpt outside-picker-class">
 		{{multiDesc || noDataHint}}
 	</view>
 	<slot wx:else />
-</picker>
+</picker> -->

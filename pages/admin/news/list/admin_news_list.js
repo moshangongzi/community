@@ -10,7 +10,8 @@ Page({
 	data: {
 		sortIndex: 8,
 		filterFlag: {
-		}
+		},
+
 	},
 
 	/**
@@ -37,6 +38,26 @@ Page({
 			})
 			.catch(console.error)
 	},
+
+	onShow() {
+		wx.cloud.callFunction({
+			// 云函数名称
+			name: 'getData',
+			// 传给云函数的参数
+			data: {
+				filterFlag: this.data.filterFlag
+			}
+		})
+			.then(res => {
+				this.setData({
+					'dataList.list': res.result.data,
+					'dataList.isLoad': true,
+					'dataList.total': res.result.data.length,
+				})
+			})
+			.catch(console.error)
+	},
+
 
 	url: async function (e) {
 		pageHelper.url(e, this);
