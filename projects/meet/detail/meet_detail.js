@@ -1,23 +1,28 @@
 // let behavior = require('../../../behavior/meet_detail_bh.js');
 const db = wx.cloud.database()
 Page({
+	data:{
+		inputValue: '',
+		showbtn:true
+	},
 	// behaviors: [behavior], 
 	onLoad: function (option) {
 		this.setData({
 			id: option.id
 		})
-		console.log(option.id);
 		db.collection('activeList').doc(this.data.id).get({
 			success: res => {
-				// res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条
-				//   console.log("fff",res) 
 				this.setData({
 					meet: res.data,
-					// isLoad: true
 				})
-				console.log(this.data.meet);
+				// console.log(this.data.meet);
 			}
 		})
+		if(option.title){
+			this.setData({
+				showbtn: false
+			})
+		}
 	},
 	bindJoinTap: function (e) {
 		// 获取用户的id
@@ -29,5 +34,6 @@ Page({
 		})
 		console.log(e.currentTarget.dataset.id);
 		
-	}
+	},
+
 })

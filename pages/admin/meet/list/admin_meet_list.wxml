@@ -59,7 +59,7 @@
 						<text class="icon-cascades margin-right-xxs text-orange"></text>状态
 					</view>
 
-					<navigator url="'/pages/meet/detail/meet_detail?id={{item._id}}&title={{item.title}}">
+					<navigator url="../../../../projects/meet/detail/meet_detail?id={{item._id}}&title={{item.title}}">
 						<view class="btn margin-right-s">预览</view>
 					</navigator>
 
