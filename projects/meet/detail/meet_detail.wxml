@@ -1,5 +1,23 @@
-<import src="../../../tpls/project/meet_detail_tpl.wxml" />
-<template is="meetDetailTpl" data="{{meet}}" />
-<view class="join" bindtap="bindJoinTap" data-id="{{meet._id}}" data-actname="{{meet.title}}">
-    <button>参加活动</button>
+<view class="main">
+	<view class="top-area">
+		<view class="top-title text-cut">{{meet.title}}</view>
+	</view>
+
+	<view class="big-box">
+		<view class="article-box padding-project">
+			<view class="article card-project shadow-project ">
+				<view class="content">
+					<text user-select="{{true}}">{{meet.content}}</text>
+				</view>
+				<view class="pics">
+					<image show-menu-by-longpress="{{true}}" class="loading" mode='widthFix' lazy-load="true" src="{{meet.imgSrc}}">
+					</image>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view wx:if="{{showbtn}}" class="join" bindtap="bindJoinTap" data-id="{{meet._id}}" data-actname="{{meet.title}}">
+	<button>参加活动</button>
 </view>

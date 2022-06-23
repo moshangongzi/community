@@ -1,184 +1,83 @@
-const AdminBiz = require('../../../../biz/admin_biz.js');
-const pageHelper = require('../../../../helper/page_helper.js');
-const cloudHelper = require('../../../../helper/cloud_helper.js');
-const timeHelper = require('../../../../helper/time_helper.js');
-
-
+let db = wx.cloud.database();
 Page({
-
-	/**
-	 * 页面的初始数据
-	 */
 	data: {
-		isLoad: false,
-
-		now: timeHelper.time('Y-M-D'),
-
-		searchDayStart: '',
-		searchDayEnd: '',
-
-		daysSet: null,
-
+		userIdList: [],
+		userList: [],
+		inputValue: '',
 		title: '',
 		titleEn: '',
+		actId: ''
 	},
-
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
-	onLoad: async function (options) {
-		if(options){
-			this.setData({
-				isLoad: true
-			})
-		}
-		let searchDayStart = timeHelper.time('Y-M-D');
-		let searchDayEnd = timeHelper.time('Y-M-D');
-		this.setData({
-			searchDayStart,
-			searchDayEnd
-		}, () => {
-			this._loadDetail();
-		});
-
+	onLoad: function (options) {
 		if (options && options.title) {
-			let title = decodeURIComponent(options.title);
+			let title = options.title;
 			this.setData({
 				title,
-				titleEn: options.title
+				titleEn: options.title,
+				actId: options.meetId
 			});
 			wx.setNavigationBarTitle({
-				title: '预约名单统计 - ' + title
+				title: '活动名单统计 - ' + title
 			});
+			this.getUserIdList();
 		}
-
 	},
-
-	_loadDetail: async function () {
-		let meetId = this.data.meetId;
-		if (!meetId) return;
-
-		let params = {
-			meetId,
-			start: this.data.searchDayStart,
-			end: this.data.searchDayEnd
-		};
-		let opt = {
-			title: 'bar'
-		};
-		try {
-			this.setData({
-				daysSet: null
-			});
-			await cloudHelper.callCloudSumbit('admin/meet_day_list', params, opt).then(res => {
+	// 获取参加活动的用户id列表
+	getUserIdList() {
+		db.collection('activeList').doc(this.data.actId)
+			.get()
+			.then(res => {
 				this.setData({
-					isLoad: true,
-					daysSet: res.data
-				}); 
-			});
-		} catch (err) {
-			console.error(err); 
-		}
-
-
+					userIdList: res.data.memberList
+				})
+				console.log('拿到了id列表', res.data.memberList);
+				this.getUserList()
+			})
+			.catch(err => {
+				console.log('没拿到id列表', err)
+			})
 	},
-
-	bindSearchTomorrowTap: function (e) {
-		this.setData({
-			searchDayStart: timeHelper.time('Y-M-D', 86400),
-			searchDayEnd: timeHelper.time('Y-M-D', 86400),
-		}, () => {
-			this._loadDetail();
-		});
-	},
-
-	bindSearchYesterdayTap: function (e) {
-		this.setData({
-			searchDayStart: timeHelper.time('Y-M-D', -86400),
-			searchDayEnd: timeHelper.time('Y-M-D', -86400),
-		}, () => {
-			this._loadDetail();
-		});
-	},
-
-
-	bindSearchTodayTap: function (e) {
-		this.setData({
-			searchDayStart: timeHelper.time('Y-M-D'),
-			searchDayEnd: timeHelper.time('Y-M-D'),
-		}, () => {
-			this._loadDetail();
-		});
-	},
-
-	onPageScroll: function (e) {
-		if (e.scrollTop > 100) {
-			this.setData({
-				topShow: true
-			});
-		} else {
-			this.setData({
-				topShow: false
-			});
+	//获取用户数据
+	getUserList() {
+		let user = {};
+		let list = []
+		for (var i = 0; i < this.data.userIdList.length; i++) {
+			db.collection('User')
+				.doc(this.data.userIdList[i])
+				.get()
+				.then(res => {
+					user = res.data
+					list.push(user); 
+					this.setData({
+						userList: list
+					})
+				})
+				.catch(res => {
+					console.log('获取活动的用户列表失败', res)
+				})
 		}
 	},
-
-	bindTopTap: function () {
-		wx.pageScrollTo({
-			scrollTop: 0
+	onChange(e) {
+		this.setData({
+			inputValue: e.detail,
+		});
+	},
+	onSearch() {
+		var value = this.data.inputValue;
+		db.collection('User').where({
+			uname: value
 		})
+			.get()
+			.then(res => {
+				console.log(res)
+				this.setData({
+					userList: res.data,
+					inputValue: ''
+				})
+			})
+			.catch(err => {
+				console.log('用户筛选后数据请求失败', err)
+			})
+		console.log(this.data.inputValue)
 	},
-
-	bindSearchTap: function (e) {
-		this._loadDetail();
-	},
-
-	url: function (e) {
-		pageHelper.url(e, this);
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
-	},
-
-	/**
-	 * 页面相关事件处理函数--监听用户下拉动作
-	 */
-	onPullDownRefresh: async function () {
-		await this._loadDetail();
-		wx.stopPullDownRefresh();
-	},
-
-	/**
-	 * 页面上拉触底事件的处理函数
-	 */
-	onReachBottom: function () {
-
-	},
-
-
 })

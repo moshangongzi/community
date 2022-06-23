@@ -1,35 +1,42 @@
-// let behavior = require('../../../behavior/meet_index_bh.js');
-// let PassortBiz = require('../../../biz/passport_biz.js');
-// let skin = require('../../skin/skin.js');
-const db = wx.cloud.database()
+const db = wx.cloud.database().collection('activeList')
 Page({
 	// behaviors: [behavior], 
-	
+	data:{
+		inputValue: '',
+		actList:[],
+		isLoad:false
+	},
 	onReady: function () {
-		// PassortBiz.initPage({
-		// 	skin,
-		// 	that: this,
-		// 	isLoadSkin: true,
-		// 	isModifyNavColor: true
-		// }); 
-
-		// this._setTypeTitle(skin);
-
-		db.collection('activeList').get({
+		db.get({
 			success: res => {
 			 this.setData({
-				'dataList.list':res.data,
-				'dataList.isLoad': true
+				actList:res.data,
+				isLoad: true
 			 })
 			}
 		  })
 	},
-	// 页面跳转/图片预览 
-	 url: function (e, that) {
-		let url = e.currentTarget.dataset.url;
-		if (!url) return;
-		wx.navigateTo({
-			url
+	onChange(e) {
+		this.setData({
+			inputValue: e.detail,
+		});
+	},
+	//搜索筛选
+	onSearch() {
+		var value = this.data.inputValue;
+		db.where({
+			title: value
 		})
-	}
+			.get()
+			.then(res => {
+				this.setData({
+					actList: res.data,
+					inputValue: ''
+				})
+			})
+			.catch(err => {
+				console.log('筛选活动后数据请求失败', err)
+			})
+		console.log(this.data.inputValue)
+	},
 })

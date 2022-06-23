@@ -1,4 +1,5 @@
 @import "../../../style/project/base/appt.wxss";
+@import "../../../style/project/base/admin.wxss";
 @import "../../skin/skin.wxss"; 
 @import "../../../style/project/meet_index_base.wxss";
   

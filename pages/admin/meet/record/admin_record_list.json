@@ -1,6 +1,6 @@
 {
-	"usingComponents": { 
-		"cmpt-picker-time": "../../../../cmpts/public/picker_time/picker_time_cmpt"
+	"usingComponents": {
+		"van-search": "@vant/weapp/search/index" 
 	},
 	"navigationBarBackgroundColor": "#2499f2",
 	"navigationBarTextStyle": "white",

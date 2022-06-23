@@ -73,35 +73,7 @@ Page({
         var openid = e.target.dataset.oid;
         var act_id = e.target.dataset.aid;
         var id = e.target.dataset.id;
-        var actlist = [];
         var memlist = [];
-        wx.cloud.database().collection('User').doc(openid)
-            .get()
-            .then(res => {
-                console.log('获取操作人成功', res);
-                if (!res.data.actList) {
-                    actlist.push(act_id)
-                } else {
-                    actlist = res.data.actList;
-                    actlist.push(act_id);
-                }
-                wx.cloud.database().collection('User')
-                    .doc(openid)
-                    .update({
-                        data: {
-                            actList: actlist
-                        }
-                    })
-                    .then(res => {
-                        this.del(id);
-                    })
-                    .catch(res => {
-                        console.log('修改失败', res)
-                    })
-            })
-            .catch(err => {
-                console.log('获取操作人失败', err)
-            })
             wx.cloud.database().collection('activeList').doc(act_id)
             .get()
             .then(res => {
@@ -121,6 +93,7 @@ Page({
                     })
                     .then(res => {
                         this.del(id);
+                        this.joinUser(openid,act_id)
                     })
                     .catch(res => {
                         console.log('修改失败', res)
@@ -129,5 +102,35 @@ Page({
             .catch(err => {
                 console.log('获取操作人失败', err)
             })
+    },
+    joinUser(openid,act_id){
+        var actlist = [];
+        wx.cloud.database().collection('User').doc(openid)
+        .get()
+        .then(res => {
+            console.log('获取操作人成功', res);
+            if (!res.data.actList) {
+                actlist.push(act_id)
+            } else {
+                actlist = res.data.actList;
+                actlist.push(act_id);
+            }
+            wx.cloud.database().collection('User')
+                .doc(openid)
+                .update({
+                    data: {
+                        actList: actlist
+                    }
+                })
+                .then(res => {
+                })
+                .catch(res => {
+                    console.log('修改失败', res)
+                })
+        })
+        .catch(err => {
+            console.log('获取操作人失败', err)
+        })
     }
+
 })

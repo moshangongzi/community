@@ -1,6 +1,7 @@
 {
 	"usingComponents": {  
+		
 	},
 	"enablePullDownRefresh": true, 
-	"navigationBarTitleText": "活动/预约详情"
+	"navigationBarTitleText": "活动详情"
 }
