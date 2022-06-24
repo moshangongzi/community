@@ -1,4 +1,13 @@
-@import "../../../style/project/base/article_list.wxss";
+@import "../../../style/project/base/appt.wxss";
+@import "../../../style/project/base/admin.wxss";
 @import "../../skin/skin.wxss"; 
-@import "../../../style/project/my_join_base.wxss"; 
+@import "../../../style/project/meet_index_base.wxss";
+  
+.meet-list-box .item-bigtext .left image {
+    border-radius: 20rpx; 
+}
+
+.meet-list-box .item { 
+    background-color: #fff!important; 
+}
 

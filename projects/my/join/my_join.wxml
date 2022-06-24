@@ -1,2 +1,25 @@
-<import src="../../../tpls/project/my_join_tpl.wxml" />
-<template is="myJoinTpl" data="{{skin,sortItems,sortMenus,dataList,search,isTotalMenu:true}}" />
+<view class="searchFix">
+	<van-search value="{{inputValue}}" placeholder="请输入要搜索的活动名" use-action-slot bind:change="onChange" bind:search="onSearch">
+		<view slot="action" class="btn mid radius bg-admin text-white margin-right-s" bind:tap="onSearch">搜索</view>
+	</van-search>
+</view>
+<view wx:if="{{actList}}" class="load text-grey">
+	共有{{actList.length}}条符合条件记录
+</view>
+<view class="meet-list-box sub-margin-bottom">
+	<block wx:for="{{actList}}" wx:key="key">
+		<navigator url="../../meet/detail/meet_detail?id={{item._id}}&title={{item.title}}">
+			<view class="item card-project shadow-project item-rightpic">
+				<view class="title content-cut-two">{{item.title}}</view>
+				<view class="desc">
+					<text class="content-cut-three">{{item.content}}</text>
+					<image class="pic loading" lazy-load="{{true}}" mode="aspectFill" src="{{item.imgSrc}}">
+					</image>
+				</view>
+				<view class="data">
+					<text class="margin-right">{{item.date}} {{item.time}}</text>
+				</view>
+			</view>
+		</navigator>
+	</block>
+</view>

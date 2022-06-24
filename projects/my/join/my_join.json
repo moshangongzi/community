@@ -1,6 +1,6 @@
 {
 	"usingComponents": { 
+		"van-search": "@vant/weapp/search/index"
 	}, 
-	"disableScroll": true, 
 	"navigationBarTitleText": "我的活动"
 }
