@@ -3,7 +3,7 @@ const db = wx.cloud.database()
 Page({
 	onReady: function () {
 		db.collection('com_notice').where({
-			kind:1
+			kind:2
 		  }).get({
 			success: res => {
 			 this.setData({
